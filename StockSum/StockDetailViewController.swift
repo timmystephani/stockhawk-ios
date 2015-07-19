@@ -19,6 +19,7 @@ class StockDetailViewController: UITableViewController {
     @IBOutlet weak var symbol: UITextField!
     @IBOutlet weak var numShares: UITextField!
     
+    
     weak var delegate: StockDetailViewControllerDelegate?
     
     var stockToEdit: Stock?
@@ -32,6 +33,13 @@ class StockDetailViewController: UITableViewController {
             symbol.text = stockToEdit!.symbol
             numShares.text = String(stockToEdit!.numShares)
             symbol.enabled = false
+            // NOT WORKING
+            /*
+            if let symbolView = tableView.viewWithTag(1007) {
+                symbolView.backgroundColor = UIColor.lightGrayColor()
+            }
+            */
+            
         }
     }
 
@@ -43,6 +51,12 @@ class StockDetailViewController: UITableViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         symbol.becomeFirstResponder()
+    }
+    
+    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+        textField.text = (textField.text as NSString).stringByReplacingCharactersInRange(range, withString: string.uppercaseString)
+
+        return false
     }
     
     @IBAction func save() {

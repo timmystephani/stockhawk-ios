@@ -9,72 +9,97 @@
 import UIKit
 
 class StockListViewController: UITableViewController, StockDetailViewControllerDelegate {
-
-    var stocks: [Stock]
+    
+    var dataModel: DataModel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        self.refreshControl?.addTarget(self, action: "handleRefresh:", forControlEvents: UIControlEvents.ValueChanged)
+        tableView.tableFooterView = UIView()
         refresh()
     }
     
-    @IBAction func refresh() {
+    func handleRefresh(refreshControl: UIRefreshControl) {
+        refresh()
+    }
+    
+    func refresh() {
         var symbols = [String]()
-        for stock in stocks {
+        dataModel.stocks.sort { (s1, s2) -> Bool in
+            return s1.symbol < s2.symbol
+        }
+        for stock in dataModel.stocks {
             symbols.append(stock.symbol)
         }
         
         Functions.queryYahoo(symbols) { (succeeded, response) -> () in
-            
-            if let query = response["query"] as? NSDictionary {
-                if let results = query["results"] as? NSDictionary {
-                    if let quote = results["quote"] as? NSArray {
-                        
-                        for singleQuote in quote {
-                            
-                            let symbol = singleQuote["symbol"] as! String
-                            let stock = self.getStockFromSymbol(symbol)
-                            
-                            stock.name = singleQuote["Name"] as! String
-                            stock.lastTradePriceOnly = (singleQuote["LastTradePriceOnly"] as! NSString).doubleValue
-                            
-                            var change = singleQuote["Change"] as! String
-                            if change.rangeOfString("+") != nil {
-                                change = change.stringByReplacingOccurrencesOfString("+", withString: "")
-                                stock.change = (change as NSString).doubleValue
-                            } else {
-                                change = change.stringByReplacingOccurrencesOfString("-", withString: "")
-                                stock.change = -(change as NSString).doubleValue
+            if succeeded {
+                if let query = response["query"] as? NSDictionary {
+                    if let results = query["results"] as? NSDictionary {
+                        if self.dataModel.stocks.count == 1 {
+                            if let quote = results["quote"] as? NSDictionary {
+                                
+                                let symbol = quote["symbol"] as! String
+                                let stock = self.getStockFromSymbol(symbol)
+                                    
+                                stock.name = quote["Name"] as! String
+                                stock.lastTradePriceOnly = (quote["LastTradePriceOnly"] as! NSString).doubleValue
+                                    
+                                var change = quote["Change"] as! String
+                                if change.rangeOfString("+") != nil {
+                                    change = change.stringByReplacingOccurrencesOfString("+", withString: "")
+                                    stock.change = (change as NSString).doubleValue
+                                } else {
+                                    change = change.stringByReplacingOccurrencesOfString("-", withString: "")
+                                    stock.change = -(change as NSString).doubleValue
+                                }
+                                
+                            }
+                        } else {
+                            if let quote = results["quote"] as? NSArray {
+                                
+                                for singleQuote in quote {
+                                    let symbol = singleQuote["symbol"] as! String
+                                    let stock = self.getStockFromSymbol(symbol)
+                                    
+                                    stock.name = singleQuote["Name"] as! String
+                                    stock.lastTradePriceOnly = (singleQuote["LastTradePriceOnly"] as! NSString).doubleValue
+                                    
+                                    var change = singleQuote["Change"] as! String
+                                    if change.rangeOfString("+") != nil {
+                                        change = change.stringByReplacingOccurrencesOfString("+", withString: "")
+                                        stock.change = (change as NSString).doubleValue
+                                    } else {
+                                        change = change.stringByReplacingOccurrencesOfString("-", withString: "")
+                                        stock.change = -(change as NSString).doubleValue
+                                    }
+                                }
                             }
                         }
+                        
                     }
                 }
+                
+                dispatch_async(dispatch_get_main_queue(), { () -> () in
+                    self.tableView.reloadData()
+                    self.refreshControl!.endRefreshing()
+                })
+            } else {
+                self.refreshControl!.endRefreshing()
+
+                var alertController = UIAlertController(title: "Error", message: "There was a problem refreshing the data. Please check your internet connection and try again.", preferredStyle: .Alert)
+                var okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default) {
+                    UIAlertAction in
+                }
+                alertController.addAction(okAction)
+                self.presentViewController(alertController, animated: true, completion: nil)
             }
             
-            dispatch_async(dispatch_get_main_queue(), { () -> () in
-                self.tableView.reloadData()
-            })
         }
     }
     
-    required init(coder aDecoder: NSCoder) {
-        stocks = [Stock]()
-        
-        var stock = Stock()
-        stock.symbol = "YHOO"
-        stock.numShares = 5
-        stocks.append(stock)
-        
-        stock = Stock()
-        stock.symbol = "AAPL"
-        stock.numShares = 7
-        stocks.append(stock)
-        
-        super.init(coder: aDecoder)
-    }
-    
     func getStockFromSymbol(symbol: String) -> Stock {
-        for stock in stocks {
+        for stock in dataModel.stocks {
             if stock.symbol == symbol {
                 return stock
             }
@@ -85,12 +110,7 @@ class StockListViewController: UITableViewController, StockDetailViewControllerD
   
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return stocks.count + 1 // summary cell
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        return dataModel.stocks.count + 1 // summary cell
     }
     
     func stockDetailViewControllerDidCancel(controller: StockDetailViewController) {
@@ -98,8 +118,8 @@ class StockListViewController: UITableViewController, StockDetailViewControllerD
     }
     
     func stockDetailViewController(controller: StockDetailViewController, didFinishAddingItem item: Stock) {
-        let newRowIndex = stocks.count
-        stocks.append(item)
+        let newRowIndex = dataModel.stocks.count
+        dataModel.stocks.append(item)
         
         let indexPath = NSIndexPath(forRow: newRowIndex, inSection: 0)
         let indexPaths = [indexPath]
@@ -110,25 +130,17 @@ class StockListViewController: UITableViewController, StockDetailViewControllerD
     }
     
     func stockDetailViewController(controller: StockDetailViewController, didFinishEditingItem item: Stock) {
-        /*
-        if let index = find(stocks, stock) {
-            let indexPath = NSIndexPath(forRow: index, inSection: 0)
-            if let cell
-        }
-        */
-        
-
         refresh()
         dismissViewControllerAnimated(true, completion: nil)
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell: UITableViewCell
-        
-        if indexPath.row < stocks.count {
+
+        if indexPath.row < dataModel.stocks.count {
             cell = tableView.dequeueReusableCellWithIdentifier("Stock") as! UITableViewCell
             
-            let stock = stocks[indexPath.row]
+            let stock = dataModel.stocks[indexPath.row]
             
             let symbol = cell.viewWithTag(1000) as! UILabel
             symbol.text = stock.symbol
@@ -142,15 +154,13 @@ class StockListViewController: UITableViewController, StockDetailViewControllerD
             
             let gainLoss = cell.viewWithTag(1003) as! UILabel
             gainLoss.text = String(format:"%.2f", stock.change * Double(stock.numShares))
-            
-            
         } else {
             cell = tableView.dequeueReusableCellWithIdentifier("Summary") as! UITableViewCell
             
             var gainLoss = 0.0
             var currentValue = 0.0
             var dayStartValue = 0.0
-            for stock in stocks {
+            for stock in dataModel.stocks {
                 currentValue += Double(stock.numShares) * stock.lastTradePriceOnly
                 dayStartValue += Double(stock.numShares) * (stock.lastTradePriceOnly - stock.change)
                 gainLoss += Double(stock.numShares) * stock.change
@@ -176,7 +186,7 @@ class StockListViewController: UITableViewController, StockDetailViewControllerD
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        if indexPath.row == stocks.count {
+        if indexPath.row == dataModel.stocks.count {
             return 80
         } else {
             return super.tableView(tableView, heightForRowAtIndexPath: indexPath)
@@ -185,11 +195,12 @@ class StockListViewController: UITableViewController, StockDetailViewControllerD
     
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
 
-        stocks.removeAtIndex(indexPath.row)
+        dataModel.stocks.removeAtIndex(indexPath.row)
 
         let indexPaths = [indexPath]
         
         tableView.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)
+        refresh()
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -206,10 +217,12 @@ class StockListViewController: UITableViewController, StockDetailViewControllerD
             
             controller.delegate = self
             if let indexPath = tableView.indexPathForCell(sender as! UITableViewCell) {
-                controller.stockToEdit = stocks[indexPath.row]
+                controller.stockToEdit = dataModel.stocks[indexPath.row]
             }
         }
     }
+    
+  
 
 
 }

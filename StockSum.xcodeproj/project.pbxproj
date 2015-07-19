@@ -16,6 +16,7 @@
 		22EFD13F1B31418D00622A52 /* Stock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EFD13E1B31418D00622A52 /* Stock.swift */; };
 		22EFD1411B3147F400622A52 /* StockDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EFD1401B3147F400622A52 /* StockDetailViewController.swift */; };
 		22F700D91B5BA76000777E87 /* Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F700D81B5BA76000777E87 /* Functions.swift */; };
+		22F700DB1B5BC34A00777E87 /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F700DA1B5BC34A00777E87 /* DataModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,6 +43,7 @@
 		22EFD13E1B31418D00622A52 /* Stock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stock.swift; sourceTree = "<group>"; };
 		22EFD1401B3147F400622A52 /* StockDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StockDetailViewController.swift; sourceTree = "<group>"; };
 		22F700D81B5BA76000777E87 /* Functions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Functions.swift; sourceTree = "<group>"; };
+		22F700DA1B5BC34A00777E87 /* DataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,6 +94,7 @@
 				22EFD13E1B31418D00622A52 /* Stock.swift */,
 				22EFD1401B3147F400622A52 /* StockDetailViewController.swift */,
 				22F700D81B5BA76000777E87 /* Functions.swift */,
+				22F700DA1B5BC34A00777E87 /* DataModel.swift */,
 			);
 			path = StockSum;
 			sourceTree = "<group>";
@@ -226,6 +229,7 @@
 				22EFD11F1B313C7900622A52 /* AppDelegate.swift in Sources */,
 				22F700D91B5BA76000777E87 /* Functions.swift in Sources */,
 				22EFD13F1B31418D00622A52 /* Stock.swift in Sources */,
+				22F700DB1B5BC34A00777E87 /* DataModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

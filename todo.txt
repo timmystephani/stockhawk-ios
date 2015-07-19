@@ -1,6 +1,11 @@
-change color to something cool
-add last updated at: datetime
-save to database
-when adding/updating check if yql has it listed - DONE
+change color to something cool and fonts
+add sorting - DONE
 check if duplicate when adding new stock
-add hud when refreshing
+interval picker for num shares
+
+add last updated at: datetime - DONE
+save to database - DONE
+when adding/updating check if yql has it listed - DONE
+add hud when refreshing - see pull to refresh
+pull to refresh - DONE
+
