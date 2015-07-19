@@ -1,0 +1,4 @@
+change color to something cool
+add last updated at: datetime
+save to database
+when adding/updating check if yql has it listed

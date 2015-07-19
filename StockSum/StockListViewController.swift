@@ -19,7 +19,12 @@ class StockListViewController: UITableViewController, StockDetailViewControllerD
     }
     
     @IBAction func refresh() {
-        queryYahoo { (succeeded, response) -> () in
+        var symbols = [String]()
+        for stock in stocks {
+            symbols.append(stock.symbol)
+        }
+        
+        Functions.queryYahoo(symbols) { (succeeded, response) -> () in
             
             if let query = response["query"] as? NSDictionary {
                 if let results = query["results"] as? NSDictionary {
@@ -77,60 +82,10 @@ class StockListViewController: UITableViewController, StockDetailViewControllerD
         return Stock() // TODO: throw error
     }
     
-    func queryYahoo(postCompleted : (succeeded: Bool, response: NSDictionary) -> ()) {
-        var yqlUrl = "https://query.yahooapis.com/v1/public/yql?format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&q="
-        
-        var symbols = [String]()
-        for stock in stocks {
-            symbols.append(stock.symbol)
-        }
-        
-        var yqlQuery = "select * from yahoo.finance.quote where symbol in ('" + "','".join(symbols) + "')"
-        yqlQuery = yqlQuery.stringByAddingPercentEncodingWithAllowedCharacters(.URLHostAllowedCharacterSet())!
-
-        println(yqlUrl + yqlQuery)
-        
-        
-        var request = NSMutableURLRequest(URL: NSURL(string: yqlUrl + yqlQuery)!)
-        var session = NSURLSession.sharedSession()
-        request.HTTPMethod = "GET"
-        
-        var err: NSError?
-        
-        var task = session.dataTaskWithRequest(request, completionHandler: {data, response, error -> Void in
-            //println("Response: \(response)")
-            var strData = NSString(data: data, encoding: NSUTF8StringEncoding)
-            //println("Body:")
-            //println(strData)
-            var err: NSError?
-            var json = NSJSONSerialization.JSONObjectWithData(data, options: .MutableLeaves, error: &err) as? NSDictionary
-            
-            
-            // Did the JSONObjectWithData constructor return an error? If so, log the error to the console
-            if(err != nil) {
-                println(err!.localizedDescription)
-                println("Error could not parse JSON: '\(strData)'")
-                //postCompleted(succeeded: false, msg: "Error")
-            }
-            else {
-                if let parseJSON = json {
-                    postCompleted(succeeded: true, response: parseJSON)
-                    return
-                }
-                else {
-                    // Woa, okay the json object was nil, something went worng. Maybe the server isn't running?
-                    let jsonStr = NSString(data: data, encoding: NSUTF8StringEncoding)
-                    println("Error could not parse JSON: \(jsonStr)")
-                    //postCompleted(succeeded: false, msg: "Error")
-                }
-            }
-        })
-        task.resume()
-        
-    }
+  
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return stocks.count
+        return stocks.count + 1 // summary cell
     }
 
     override func didReceiveMemoryWarning() {
@@ -155,24 +110,47 @@ class StockListViewController: UITableViewController, StockDetailViewControllerD
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-            let cell = tableView.dequeueReusableCellWithIdentifier("Stock") as! UITableViewCell
+        var cell: UITableViewCell
+        
+        if indexPath.row < stocks.count {
+            cell = tableView.dequeueReusableCellWithIdentifier("Stock") as! UITableViewCell
             
             let stock = stocks[indexPath.row]
             
             let symbol = cell.viewWithTag(1000) as! UILabel
             symbol.text = stock.symbol
-        
+            
             let price = cell.viewWithTag(1001) as! UILabel
             price.text = "$" + String(format:"%.2f", stock.lastTradePriceOnly) +
                 " (" +  (stock.change >= 0 ? "+" : "") + String(format:"%.2f", stock.change) + ")"
-        
+            
             let name = cell.viewWithTag(1002) as! UILabel
             name.text = stock.name
-        
+            
             let gainLoss = cell.viewWithTag(1003) as! UILabel
             gainLoss.text = String(format:"%.2f", stock.change * Double(stock.numShares))
+        } else {
+            cell = tableView.dequeueReusableCellWithIdentifier("Summary") as! UITableViewCell
+            
+            var gainLoss = 0.0
+            var currentValue = 0.0
+            var dayStartValue = 0.0
+            for stock in stocks {
+                currentValue += Double(stock.numShares) * stock.lastTradePriceOnly
+                dayStartValue += Double(stock.numShares) * (stock.lastTradePriceOnly - stock.change)
+                gainLoss += Double(stock.numShares) * stock.change
+            }
+            
+            let summary = cell.viewWithTag(1004) as! UILabel
+            summary.text = "Today's change: $" + String(format:"%.2f", gainLoss) + " (" +
+                String(format:"%.2f", ((currentValue / dayStartValue) - 1) * 100) + "%" + ")"
+            summary.textColor = UIColor(red: 0.04, green: 0.8, blue: 0.04, alpha: 1.0)
 
-            return cell
+            let totalValue = cell.viewWithTag(1005) as! UILabel
+            totalValue.text = "Total value: $" + String(format: "%.2f", currentValue)
+        }
+        
+        return cell
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {

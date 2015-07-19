@@ -15,6 +15,7 @@
 		22EFD1351B313C7900622A52 /* StockSumTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EFD1341B313C7900622A52 /* StockSumTests.swift */; };
 		22EFD13F1B31418D00622A52 /* Stock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EFD13E1B31418D00622A52 /* Stock.swift */; };
 		22EFD1411B3147F400622A52 /* StockDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EFD1401B3147F400622A52 /* StockDetailViewController.swift */; };
+		22F700D91B5BA76000777E87 /* Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F700D81B5BA76000777E87 /* Functions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +41,7 @@
 		22EFD1341B313C7900622A52 /* StockSumTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockSumTests.swift; sourceTree = "<group>"; };
 		22EFD13E1B31418D00622A52 /* Stock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stock.swift; sourceTree = "<group>"; };
 		22EFD1401B3147F400622A52 /* StockDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StockDetailViewController.swift; sourceTree = "<group>"; };
+		22F700D81B5BA76000777E87 /* Functions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Functions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,6 +91,7 @@
 				22EFD11C1B313C7900622A52 /* Supporting Files */,
 				22EFD13E1B31418D00622A52 /* Stock.swift */,
 				22EFD1401B3147F400622A52 /* StockDetailViewController.swift */,
+				22F700D81B5BA76000777E87 /* Functions.swift */,
 			);
 			path = StockSum;
 			sourceTree = "<group>";
@@ -221,6 +224,7 @@
 				22EFD1411B3147F400622A52 /* StockDetailViewController.swift in Sources */,
 				22EFD1211B313C7900622A52 /* StockListViewController.swift in Sources */,
 				22EFD11F1B313C7900622A52 /* AppDelegate.swift in Sources */,
+				22F700D91B5BA76000777E87 /* Functions.swift in Sources */,
 				22EFD13F1B31418D00622A52 /* Stock.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -351,6 +355,7 @@
 				INFOPLIST_FILE = StockSum/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -361,6 +366,7 @@
 				INFOPLIST_FILE = StockSum/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
@@ -417,6 +423,7 @@
 				22EFD13A1B313C7900622A52 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		22EFD13B1B313C7900622A52 /* Build configuration list for PBXNativeTarget "StockSumTests" */ = {
 			isa = XCConfigurationList;
@@ -425,6 +432,7 @@
 				22EFD13D1B313C7900622A52 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
