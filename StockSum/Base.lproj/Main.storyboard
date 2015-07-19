@@ -44,8 +44,11 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="sOz-JL-RVM" kind="presentation" identifier="EditStock" id="fgY-gv-iMQ"/>
+                                </connections>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Summary" rowHeight="70" id="nMb-iu-Hvn">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Summary" rowHeight="80" id="nMb-iu-Hvn">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="nMb-iu-Hvn" id="Cw1-Yh-jJ5">
                                     <autoresizingMask key="autoresizingMask"/>
@@ -57,9 +60,15 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" tag="1005" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Total Value" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kzK-Bt-wZY">
-                                            <rect key="frame" x="18" y="35" width="574" height="21"/>
+                                            <rect key="frame" x="18" y="35" width="167" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" tag="1006" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Last Updated" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Fa-WI-owZ">
+                                            <rect key="frame" x="18" y="57" width="220" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                            <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
@@ -80,7 +89,7 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="Zu2-hv-k6R">
                             <connections>
-                                <segue destination="sOz-JL-RVM" kind="presentation" identifier="AddEditStock" id="Ya7-oA-hGB"/>
+                                <segue destination="sOz-JL-RVM" kind="presentation" identifier="AddStock" id="Ya7-oA-hGB"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -189,7 +198,10 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="72A-Ft-aHo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2569" y="336"/>
+            <point key="canvasLocation" x="2563" y="310"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="fgY-gv-iMQ"/>
+    </inferredMetricsTieBreakers>
 </document>

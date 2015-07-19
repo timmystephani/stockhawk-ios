@@ -105,7 +105,20 @@ class StockListViewController: UITableViewController, StockDetailViewControllerD
         let indexPaths = [indexPath]
         
         tableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)
+        refresh()
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func stockDetailViewController(controller: StockDetailViewController, didFinishEditingItem item: Stock) {
+        /*
+        if let index = find(stocks, stock) {
+            let indexPath = NSIndexPath(forRow: index, inSection: 0)
+            if let cell
+        }
+        */
         
+
+        refresh()
         dismissViewControllerAnimated(true, completion: nil)
     }
     
@@ -129,6 +142,8 @@ class StockListViewController: UITableViewController, StockDetailViewControllerD
             
             let gainLoss = cell.viewWithTag(1003) as! UILabel
             gainLoss.text = String(format:"%.2f", stock.change * Double(stock.numShares))
+            
+            
         } else {
             cell = tableView.dequeueReusableCellWithIdentifier("Summary") as! UITableViewCell
             
@@ -148,15 +163,24 @@ class StockListViewController: UITableViewController, StockDetailViewControllerD
 
             let totalValue = cell.viewWithTag(1005) as! UILabel
             totalValue.text = "Total value: $" + String(format: "%.2f", currentValue)
+            
+            let lastUpdated = cell.viewWithTag(1006) as! UILabel
+            let date = NSDate()
+            let formatter = NSDateFormatter()
+            formatter.dateStyle = .ShortStyle
+            formatter.timeStyle = .ShortStyle
+            lastUpdated.text = "Last updated: " + formatter.stringFromDate(date)
         }
         
         return cell
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        performSegueWithIdentifier("AddEditStock", sender: self)
-        
-        //tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        if indexPath.row == stocks.count {
+            return 80
+        } else {
+            return super.tableView(tableView, heightForRowAtIndexPath: indexPath)
+        }
     }
     
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
@@ -169,13 +193,21 @@ class StockListViewController: UITableViewController, StockDetailViewControllerD
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "AddEditStock" {
-        
+        if segue.identifier == "AddStock" {
             let navigationController = segue.destinationViewController as! UINavigationController
 
             let controller = navigationController.topViewController as! StockDetailViewController
 
             controller.delegate = self
+        } else if segue.identifier == "EditStock" {
+            let navigationController = segue.destinationViewController as! UINavigationController
+            
+            let controller = navigationController.topViewController as! StockDetailViewController
+            
+            controller.delegate = self
+            if let indexPath = tableView.indexPathForCell(sender as! UITableViewCell) {
+                controller.stockToEdit = stocks[indexPath.row]
+            }
         }
     }
 
