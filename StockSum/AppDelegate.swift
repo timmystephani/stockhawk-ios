@@ -19,12 +19,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UINavigationBar.appearance().barTintColor = UIColor.blackColor()
         
         UINavigationBar.appearance().titleTextAttributes = [
-            NSForegroundColorAttributeName: UIColor.whiteColor() ]
+            NSForegroundColorAttributeName: UIColor.whiteColor(),
+            NSFontAttributeName: UIFont(name: Globals.CUSTOM_FONT, size: 20)!
+        ]
     }
+    
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         customizeAppearance()
-            
+        
         let navigationController = window!.rootViewController as! UINavigationController
         let controller = navigationController.viewControllers[0] as! StockListViewController
         controller.dbAccess = dbAccess

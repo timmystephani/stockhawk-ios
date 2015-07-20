@@ -1,4 +1,3 @@
-add cool font
 make cool icon - Change name to Simple Stock List or Simple Stock Tracker
 add comments to code
 add hud after saving stock
@@ -13,3 +12,6 @@ add sorting - DONE
 check if duplicate when adding new stock - DONE
 interval picker for num shares - Nahhhh
 change color - DONE
+add cool font- DONE
+
+color palette: https://www.materialpalette.com/deep-purple/blue

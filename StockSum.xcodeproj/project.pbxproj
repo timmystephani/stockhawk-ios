@@ -19,6 +19,8 @@
 		22F700DB1B5BC34A00777E87 /* DBAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F700DA1B5BC34A00777E87 /* DBAccess.swift */; };
 		22F700E11B5CCBD400777E87 /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F700E01B5CCBD400777E87 /* UIColorExtension.swift */; };
 		22F700E31B5CDBBE00777E87 /* CustomNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F700E21B5CDBBE00777E87 /* CustomNavigationController.swift */; };
+		22F700E91B5CE59600777E87 /* DINNextLTW04-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 22F700E81B5CE59600777E87 /* DINNextLTW04-Regular.ttf */; };
+		22F700EB1B5CEAB500777E87 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F700EA1B5CEAB500777E87 /* Globals.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +50,8 @@
 		22F700DA1B5BC34A00777E87 /* DBAccess.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DBAccess.swift; sourceTree = "<group>"; };
 		22F700E01B5CCBD400777E87 /* UIColorExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
 		22F700E21B5CDBBE00777E87 /* CustomNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomNavigationController.swift; sourceTree = "<group>"; };
+		22F700E81B5CE59600777E87 /* DINNextLTW04-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DINNextLTW04-Regular.ttf"; sourceTree = "<group>"; };
+		22F700EA1B5CEAB500777E87 /* Globals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Globals.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,6 +93,7 @@
 		22EFD11B1B313C7900622A52 /* StockSum */ = {
 			isa = PBXGroup;
 			children = (
+				22F700E71B5CE4EF00777E87 /* Resources */,
 				22F700E61B5CE2C800777E87 /* Utils */,
 				22F700E51B5CE2BC00777E87 /* Models */,
 				22F700E41B5CE2A700777E87 /* ViewControllers */,
@@ -150,8 +155,17 @@
 				22F700D81B5BA76000777E87 /* Functions.swift */,
 				22F700E01B5CCBD400777E87 /* UIColorExtension.swift */,
 				22F700E21B5CDBBE00777E87 /* CustomNavigationController.swift */,
+				22F700EA1B5CEAB500777E87 /* Globals.swift */,
 			);
 			name = Utils;
+			sourceTree = "<group>";
+		};
+		22F700E71B5CE4EF00777E87 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				22F700E81B5CE59600777E87 /* DINNextLTW04-Regular.ttf */,
+			);
+			name = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -234,6 +248,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				22F700E91B5CE59600777E87 /* DINNextLTW04-Regular.ttf in Resources */,
 				22EFD1241B313C7900622A52 /* Main.storyboard in Resources */,
 				22EFD1291B313C7900622A52 /* LaunchScreen.xib in Resources */,
 				22EFD1261B313C7900622A52 /* Images.xcassets in Resources */,
@@ -262,6 +277,7 @@
 				22F700D91B5BA76000777E87 /* Functions.swift in Sources */,
 				22EFD13F1B31418D00622A52 /* Stock.swift in Sources */,
 				22F700DB1B5BC34A00777E87 /* DBAccess.swift in Sources */,
+				22F700EB1B5CEAB500777E87 /* Globals.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

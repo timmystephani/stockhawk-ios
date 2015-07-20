@@ -36,6 +36,18 @@ class StockDetailViewController: UITableViewController {
             numShares.text = String(stockToEdit!.numShares)
             symbol.enabled = false
         }
+        
+        if let font = UIFont(name: Globals.CUSTOM_FONT, size: 18) {
+            let barButton = UIBarButtonItem.appearance()
+            barButton.setTitleTextAttributes([NSFontAttributeName: font], forState: UIControlState.Normal)
+        }
+    }
+    
+    override func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        
+        let header:UITableViewHeaderFooterView = view as! UITableViewHeaderFooterView
+        
+        header.textLabel.font = UIFont(name: Globals.CUSTOM_FONT, size: 18)
     }
     
     override func viewWillAppear(animated: Bool) {
