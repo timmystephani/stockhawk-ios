@@ -6,6 +6,8 @@
 //  Copyright (c) 2015 Tim Stephani. All rights reserved.
 //
 import UIKit
+import Dispatch
+import Foundation
 
 class Functions {
     static let YQL_URL = "https://query.yahooapis.com/v1/public/yql?format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&q="
@@ -46,5 +48,10 @@ class Functions {
         })
         
         task.resume()
+    }
+    
+    static func afterDelay(seconds: Double, closure: () -> ()) {
+        let when = dispatch_time(DISPATCH_TIME_NOW, Int64(seconds * Double(NSEC_PER_SEC)))
+        dispatch_after(when, dispatch_get_main_queue(), closure)
     }
 }

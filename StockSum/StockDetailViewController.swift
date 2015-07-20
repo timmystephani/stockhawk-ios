@@ -8,6 +8,7 @@
 
 import UIKit
 
+
 protocol StockDetailViewControllerDelegate: class {
     func stockDetailViewControllerDidCancel(controller: StockDetailViewController)
     func stockDetailViewController(controller: StockDetailViewController, didFinishAddingItem item: Stock)
@@ -75,8 +76,13 @@ class StockDetailViewController: UITableViewController {
         }
         
         if let stock = stockToEdit {
+            
             stock.numShares = self.numShares.text.toInt()!
-            self.delegate?.stockDetailViewController(self, didFinishEditingItem: stock)
+            showFinishedHud()
+            Functions.afterDelay(0.6) {
+                self.delegate?.stockDetailViewController(self, didFinishEditingItem: stock)
+            }
+            
         } else {
             if stockAlreadyExists(symbol.text) {
                 self.showAlert("Error", message: "You already have that stock in your list.")
@@ -100,7 +106,10 @@ class StockDetailViewController: UITableViewController {
                             let stock = Stock()
                             stock.symbol = self.symbol.text
                             stock.numShares = self.numShares.text.toInt()!
-                            self.delegate?.stockDetailViewController(self, didFinishAddingItem: stock)
+                            self.showFinishedHud()
+                            Functions.afterDelay(0.6) {
+                                self.delegate?.stockDetailViewController(self, didFinishAddingItem: stock)
+                            }
                         }
                     })
                 } else {
@@ -108,6 +117,11 @@ class StockDetailViewController: UITableViewController {
                 }
             }
         }
+    }
+    
+    func showFinishedHud() {
+        let hudView = HudView.hudInView(navigationController!.view, animated: true)
+        hudView.text = "Saved!"
     }
     
     /*
