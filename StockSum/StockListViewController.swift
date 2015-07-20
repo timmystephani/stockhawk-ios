@@ -10,27 +10,64 @@ import UIKit
 
 class StockListViewController: UITableViewController, StockDetailViewControllerDelegate {
     
+    /*
+    Encapsulates functionality for saving stocks to local .plist file
+    */
     var dataModel: DataModel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        /*
+        Set up handler for pull to refresh functionality
+        */
         self.refreshControl?.addTarget(self, action: "handleRefresh:", forControlEvents: UIControlEvents.ValueChanged)
+        
+        /*
+        Removes empty table view cells at bottom of list
+        */
         tableView.tableFooterView = UIView()
+        
+        /*
+        Query yahoo and try to update stock prices
+        */
         refresh()
     }
     
+    
+    /*
+    Handler for pull to refresh funcationlity - delegate to refresh()
+    */
     func handleRefresh(refreshControl: UIRefreshControl) {
         refresh()
     }
     
-    func refresh() {
-        var symbols = [String]()
+    /*
+    Sort stocks alphabetically ASC
+    */
+    func sortStocks(stocks: [Stock]) {
         dataModel.stocks.sort { (s1, s2) -> Bool in
             return s1.symbol < s2.symbol
         }
-        for stock in dataModel.stocks {
+    }
+    
+    /*
+    Helper function that returns stock symbols in string array -
+    format accepted by queryYahoo function
+    */
+    func convertStockArrayToStringArray(stocks: [Stock]) -> [String] {
+        var symbols = [String]()
+        
+        for stock in stocks {
             symbols.append(stock.symbol)
         }
+        return symbols
+    }
+    
+    func refresh() {
+        sortStocks(dataModel.stocks)
+        
+        var symbols = convertStockArrayToStringArray(dataModel.stocks)
         
         Functions.queryYahoo(symbols) { (succeeded, response) -> () in
             if succeeded {
@@ -98,6 +135,11 @@ class StockListViewController: UITableViewController, StockDetailViewControllerD
         }
     }
     
+    /*
+    Looks through our existing stocks trying to find 
+    one with same symbol - useful when yahoo api returns
+    array of records not neccessarily sorted
+    */
     func getStockFromSymbol(symbol: String) -> Stock {
         for stock in dataModel.stocks {
             if stock.symbol == symbol {
@@ -106,8 +148,6 @@ class StockListViewController: UITableViewController, StockDetailViewControllerD
         }
         return Stock() // TODO: throw error
     }
-    
-  
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return dataModel.stocks.count + 1 // summary cell
@@ -118,14 +158,16 @@ class StockListViewController: UITableViewController, StockDetailViewControllerD
     }
     
     func stockDetailViewController(controller: StockDetailViewController, didFinishAddingItem item: Stock) {
-        let newRowIndex = dataModel.stocks.count
+        let newRowIndex = dataModel.stocks.count + 1
         dataModel.stocks.append(item)
         
         let indexPath = NSIndexPath(forRow: newRowIndex, inSection: 0)
         let indexPaths = [indexPath]
         
         tableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)
+        
         refresh()
+        
         dismissViewControllerAnimated(true, completion: nil)
     }
     
@@ -137,10 +179,10 @@ class StockListViewController: UITableViewController, StockDetailViewControllerD
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell: UITableViewCell
 
-        if indexPath.row < dataModel.stocks.count {
+        if indexPath.row > 0 {
             cell = tableView.dequeueReusableCellWithIdentifier("Stock") as! UITableViewCell
             
-            let stock = dataModel.stocks[indexPath.row]
+            let stock = dataModel.stocks[indexPath.row - 1]
             
             let symbol = cell.viewWithTag(1000) as! UILabel
             symbol.text = stock.symbol
@@ -186,7 +228,7 @@ class StockListViewController: UITableViewController, StockDetailViewControllerD
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        if indexPath.row == dataModel.stocks.count {
+        if indexPath.row == 0 {
             return 80
         } else {
             return super.tableView(tableView, heightForRowAtIndexPath: indexPath)
@@ -194,12 +236,12 @@ class StockListViewController: UITableViewController, StockDetailViewControllerD
     }
     
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-
-        dataModel.stocks.removeAtIndex(indexPath.row)
+        dataModel.stocks.removeAtIndex(indexPath.row - 1)
 
         let indexPaths = [indexPath]
         
         tableView.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)
+        
         refresh()
     }
     
@@ -208,7 +250,9 @@ class StockListViewController: UITableViewController, StockDetailViewControllerD
             let navigationController = segue.destinationViewController as! UINavigationController
 
             let controller = navigationController.topViewController as! StockDetailViewController
-
+            
+            controller.dataModel = dataModel
+            
             controller.delegate = self
         } else if segue.identifier == "EditStock" {
             let navigationController = segue.destinationViewController as! UINavigationController
@@ -216,14 +260,11 @@ class StockListViewController: UITableViewController, StockDetailViewControllerD
             let controller = navigationController.topViewController as! StockDetailViewController
             
             controller.delegate = self
+            
             if let indexPath = tableView.indexPathForCell(sender as! UITableViewCell) {
-                controller.stockToEdit = dataModel.stocks[indexPath.row]
+                controller.stockToEdit = dataModel.stocks[indexPath.row - 1]
             }
         }
     }
-    
-  
-
-
 }
 

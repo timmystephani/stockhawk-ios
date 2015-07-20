@@ -16,6 +16,8 @@ protocol StockDetailViewControllerDelegate: class {
 
 class StockDetailViewController: UITableViewController {
 
+    var dataModel: DataModel!
+    
     @IBOutlet weak var symbol: UITextField!
     @IBOutlet weak var numShares: UITextField!
     
@@ -42,11 +44,6 @@ class StockDetailViewController: UITableViewController {
             
         }
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -71,38 +68,75 @@ class StockDetailViewController: UITableViewController {
             stock.numShares = self.numShares.text.toInt()!
             self.delegate?.stockDetailViewController(self, didFinishEditingItem: stock)
         } else {
+            if stockAlreadyExists(symbol.text) {
+                self.showAlert("Error", message: "You already have that stock in your list.")
+                return
+            }
+            
             var symbols = [String]()
             symbols.append(symbol.text)
-            // TODO: check if stock already exists
+
             Functions.queryYahoo(symbols) { (succeeded, response) -> () in
-                var invalidSymbol = false
-                
-                if let query = response["query"] as? NSDictionary {
-                    if let results = query["results"] as? NSDictionary {
-                        if let quote = results["quote"] as? NSDictionary {
-                            if let name = quote["Name"] as? String {
-                                // valid
-                            } else {
-                                invalidSymbol = true
-                            }
+                if succeeded {
+                    var invalidSymbol = false
+                    if self.hasNullResult(response) {
+                        invalidSymbol = true
+                    }
+
+                    dispatch_async(dispatch_get_main_queue(), { () -> () in
+                        if invalidSymbol {
+                            self.showAlert("Error", message: "That symbol is not recognized by the Yahoo Finance API.")
+                        } else {
+                            let stock = Stock()
+                            stock.symbol = self.symbol.text
+                            stock.numShares = self.numShares.text.toInt()!
+                            self.delegate?.stockDetailViewController(self, didFinishAddingItem: stock)
                         }
+                    })
+                } else {
+                    self.showAlert("Error", message: "There was a problem refreshing the data. Please check your internet connection and try again.")
+                }
+            }
+        }
+    }
+    
+    /*
+    Checks yahoo response to see if the "Name" value
+    is null, which indicates the symbol is invalid 
+    (not recognized by Yahoo API)
+    */
+    func hasNullResult(response: NSDictionary) -> Bool {
+        if let query = response["query"] as? NSDictionary {
+            if let results = query["results"] as? NSDictionary {
+                if let quote = results["quote"] as? NSDictionary {
+                    if let name = quote["Name"] as? String {
+                        // valid
+                    } else {
+                        return true
                     }
                 }
-                
-                dispatch_async(dispatch_get_main_queue(), { () -> () in
-                    if invalidSymbol {
-                        var alert = UIAlertView(title: "Error!", message: "That symbol is not recognized by the Yahoo Finance API", delegate: nil, cancelButtonTitle: "Ok")
-                        alert.show()
-                    } else {
-                        let stock = Stock()
-                        stock.symbol = self.symbol.text
-                        stock.numShares = self.numShares.text.toInt()!
-                        self.delegate?.stockDetailViewController(self, didFinishAddingItem: stock)
-                    }
-                })
+            }
+        }
+        return false
+    }
+    
+    func stockAlreadyExists(symbol: String) -> Bool {
+        for stock in dataModel.stocks {
+            if stock.symbol == symbol {
+                return true
             }
         }
         
+        return false
+    }
+    
+    func showAlert(title: String, message: String) {
+        var alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+        var okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default) {
+            UIAlertAction in
+        }
+        alertController.addAction(okAction)
+        self.presentViewController(alertController, animated: true, completion: nil)
     }
     
     @IBAction func cancel() {
