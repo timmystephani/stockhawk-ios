@@ -60,6 +60,13 @@ class StockDetailViewController: UITableViewController {
     }
     
     @IBAction func save() {
+        if symbol.text == "" {
+            showAlert("Error", message: "Please enter a symbol or click Cancel.")
+            return
+        } else if numShares.text == "" {
+            numShares.text = "0"
+        }
+        
         if let stock = stockToEdit {
             stock.numShares = self.numShares.text.toInt()!
             self.delegate?.stockDetailViewController(self, didFinishEditingItem: stock)
