@@ -108,7 +108,6 @@
 				22EFD1251B313C7900622A52 /* Images.xcassets */,
 				22EFD1271B313C7900622A52 /* LaunchScreen.xib */,
 				22EFD11C1B313C7900622A52 /* Supporting Files */,
-				22F700EC1B5CF4FC00777E87 /* HudView.swift */,
 			);
 			path = StockSum;
 			sourceTree = "<group>";
@@ -163,6 +162,7 @@
 				22F700E01B5CCBD400777E87 /* UIColorExtension.swift */,
 				22F700E21B5CDBBE00777E87 /* CustomNavigationController.swift */,
 				22F700EA1B5CEAB500777E87 /* Globals.swift */,
+				22F700EC1B5CF4FC00777E87 /* HudView.swift */,
 			);
 			name = Utils;
 			sourceTree = "<group>";

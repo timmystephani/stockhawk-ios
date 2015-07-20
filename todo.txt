@@ -1,8 +1,6 @@
 make cool icon - Change name to Simple Stock List or Simple Stock Tracker
-add comments to code
-add hud after saving stock
-fix layouts so it autosizes
 change color of symbol textbox when editing to show disabled
+add comments to code
 
 add last updated at: datetime - DONE
 save to database - DONE
@@ -14,5 +12,7 @@ check if duplicate when adding new stock - DONE
 interval picker for num shares - Nahhhh
 change color - DONE
 add cool font- DONE
+add hud after saving stock - DONE
+fix layouts so it autosizes - DONE
 
 color palette: https://www.materialpalette.com/deep-purple/blue

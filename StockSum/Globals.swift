@@ -8,4 +8,5 @@
 
 class Globals {
     static var CUSTOM_FONT = "DINNextLTW04-Regular"
+    static var LIGHT_PURPLE = 0x673AB7
 }
