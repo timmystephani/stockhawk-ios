@@ -172,7 +172,7 @@ class StockListViewController: UITableViewController, StockDetailViewControllerD
     }
     
     func stockDetailViewController(controller: StockDetailViewController, didFinishEditingItem item: Stock) {
-        refresh()
+        tableView.reloadData()
         dismissViewControllerAnimated(true, completion: nil)
     }
     
@@ -225,8 +225,12 @@ class StockListViewController: UITableViewController, StockDetailViewControllerD
             }
             
             let todaysChange = cell.viewWithTag(1009) as! UILabel
-            todaysChange.text = "$" + String(format:"%.2f", gainLoss) + " (" +
-                String(format:"%.2f", ((currentValue / dayStartValue) - 1) * 100) + "%" + ")"
+            var percentChange = 0.0
+            if dayStartValue > 0 { // avoid divide by zero (nan)
+                percentChange = ((currentValue / dayStartValue) - 1) * 100
+            }
+            todaysChange.text = "$" + String(format:"%.2f", abs(gainLoss)) + " " +
+                String(format:"%.2f", abs(percentChange)) + "%"
             if gainLoss > 0 {
                 todaysChange.textColor = UIColor(red: 0.04, green: 0.8, blue: 0.04, alpha: 1.0)
             } else if gainLoss < 0 {
@@ -263,7 +267,7 @@ class StockListViewController: UITableViewController, StockDetailViewControllerD
         
         tableView.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)
         
-        refresh()
+        tableView.reloadData()
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
