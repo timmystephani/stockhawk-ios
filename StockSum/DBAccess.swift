@@ -8,7 +8,7 @@
 
 import Foundation
 
-class DataModel {
+class DBAccess {
     var stocks = [Stock]()
     
     init() {
@@ -21,7 +21,7 @@ class DataModel {
     }
     
     func dataFilePath() -> String {
-            return documentsDirectory().stringByAppendingPathComponent("Stocks.plist")
+        return documentsDirectory().stringByAppendingPathComponent("Stocks.plist")
     }
     
     func saveStocks() {
@@ -35,14 +35,14 @@ class DataModel {
     }
     
     func loadStocks() {
-            let path = dataFilePath()
+        let path = dataFilePath()
             
-            if NSFileManager.defaultManager().fileExistsAtPath(path) {
+        if NSFileManager.defaultManager().fileExistsAtPath(path) {
             if let data = NSData(contentsOfFile: path) {
-            let unarchiver = NSKeyedUnarchiver(forReadingWithData: data)
-            stocks = unarchiver.decodeObjectForKey("Stocks") as! [Stock]
-            unarchiver.finishDecoding()
+                let unarchiver = NSKeyedUnarchiver(forReadingWithData: data)
+                stocks = unarchiver.decodeObjectForKey("Stocks") as! [Stock]
+                unarchiver.finishDecoding()
             }
-            }
+        }
     }
 }

@@ -1,6 +1,8 @@
-change color to something cool and fonts
+add cool font
 make cool icon - Change name to Simple Stock List or Simple Stock Tracker
 add comments to code
+add hud after saving stock
+fix layouts so it autosizes
 
 add last updated at: datetime - DONE
 save to database - DONE
@@ -10,3 +12,4 @@ pull to refresh - DONE
 add sorting - DONE
 check if duplicate when adding new stock - DONE
 interval picker for num shares - Nahhhh
+change color - DONE

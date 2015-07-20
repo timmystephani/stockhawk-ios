@@ -16,7 +16,7 @@ protocol StockDetailViewControllerDelegate: class {
 
 class StockDetailViewController: UITableViewController {
 
-    var dataModel: DataModel!
+    var dbAccess: DBAccess!
     
     @IBOutlet weak var symbol: UITextField!
     @IBOutlet weak var numShares: UITextField!
@@ -35,19 +35,17 @@ class StockDetailViewController: UITableViewController {
             symbol.text = stockToEdit!.symbol
             numShares.text = String(stockToEdit!.numShares)
             symbol.enabled = false
-            // NOT WORKING
-            /*
-            if let symbolView = tableView.viewWithTag(1007) {
-                symbolView.backgroundColor = UIColor.lightGrayColor()
-            }
-            */
-            
         }
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        symbol.becomeFirstResponder()
+        
+        if let item = stockToEdit {
+            numShares.becomeFirstResponder()
+        } else {
+            symbol.becomeFirstResponder()
+        }
     }
     
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
@@ -121,7 +119,7 @@ class StockDetailViewController: UITableViewController {
     }
     
     func stockAlreadyExists(symbol: String) -> Bool {
-        for stock in dataModel.stocks {
+        for stock in dbAccess.stocks {
             if stock.symbol == symbol {
                 return true
             }

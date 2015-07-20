@@ -13,7 +13,7 @@ class StockListViewController: UITableViewController, StockDetailViewControllerD
     /*
     Encapsulates functionality for saving stocks to local .plist file
     */
-    var dataModel: DataModel!
+    var dbAccess: DBAccess!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,7 +46,7 @@ class StockListViewController: UITableViewController, StockDetailViewControllerD
     Sort stocks alphabetically ASC
     */
     func sortStocks(stocks: [Stock]) {
-        dataModel.stocks.sort { (s1, s2) -> Bool in
+        dbAccess.stocks.sort { (s1, s2) -> Bool in
             return s1.symbol < s2.symbol
         }
     }
@@ -65,15 +65,15 @@ class StockListViewController: UITableViewController, StockDetailViewControllerD
     }
     
     func refresh() {
-        sortStocks(dataModel.stocks)
+        sortStocks(dbAccess.stocks)
         
-        var symbols = convertStockArrayToStringArray(dataModel.stocks)
+        var symbols = convertStockArrayToStringArray(dbAccess.stocks)
         
         Functions.queryYahoo(symbols) { (succeeded, response) -> () in
             if succeeded {
                 if let query = response["query"] as? NSDictionary {
                     if let results = query["results"] as? NSDictionary {
-                        if self.dataModel.stocks.count == 1 {
+                        if self.dbAccess.stocks.count == 1 {
                             if let quote = results["quote"] as? NSDictionary {
                                 
                                 let symbol = quote["symbol"] as! String
@@ -141,7 +141,7 @@ class StockListViewController: UITableViewController, StockDetailViewControllerD
     array of records not neccessarily sorted
     */
     func getStockFromSymbol(symbol: String) -> Stock {
-        for stock in dataModel.stocks {
+        for stock in dbAccess.stocks {
             if stock.symbol == symbol {
                 return stock
             }
@@ -150,7 +150,7 @@ class StockListViewController: UITableViewController, StockDetailViewControllerD
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dataModel.stocks.count + 1 // summary cell
+        return dbAccess.stocks.count + 1 // summary cell
     }
     
     func stockDetailViewControllerDidCancel(controller: StockDetailViewController) {
@@ -158,8 +158,8 @@ class StockListViewController: UITableViewController, StockDetailViewControllerD
     }
     
     func stockDetailViewController(controller: StockDetailViewController, didFinishAddingItem item: Stock) {
-        let newRowIndex = dataModel.stocks.count + 1
-        dataModel.stocks.append(item)
+        let newRowIndex = dbAccess.stocks.count + 1
+        dbAccess.stocks.append(item)
         
         let indexPath = NSIndexPath(forRow: newRowIndex, inSection: 0)
         let indexPaths = [indexPath]
@@ -182,46 +182,67 @@ class StockListViewController: UITableViewController, StockDetailViewControllerD
         if indexPath.row > 0 {
             cell = tableView.dequeueReusableCellWithIdentifier("Stock") as! UITableViewCell
             
-            let stock = dataModel.stocks[indexPath.row - 1]
+            let stock = dbAccess.stocks[indexPath.row - 1]
             
             let symbol = cell.viewWithTag(1000) as! UILabel
             symbol.text = stock.symbol
             
-            let price = cell.viewWithTag(1001) as! UILabel
-            price.text = "$" + String(format:"%.2f", stock.lastTradePriceOnly) +
-                " (" +  (stock.change >= 0 ? "+" : "") + String(format:"%.2f", stock.change) + ")"
-            
             let name = cell.viewWithTag(1002) as! UILabel
             name.text = stock.name
             
+            let numShares = cell.viewWithTag(1008) as! UILabel
+            numShares.text = String(stock.numShares) + " shares"
+            
+            let price = cell.viewWithTag(1001) as! UILabel
+            price.text = "$" + String(format:"%.2f", stock.lastTradePriceOnly)
+                
+            let change = cell.viewWithTag(1012) as! UILabel
+            change.text = "$" + String(format:"%.2f", abs(stock.change)) + " "
+                + String(format:"%.2f", abs(((stock.lastTradePriceOnly / (stock.lastTradePriceOnly - stock.change)) - 1) * 100)) + "%"
+            
             let gainLoss = cell.viewWithTag(1003) as! UILabel
-            gainLoss.text = String(format:"%.2f", stock.change * Double(stock.numShares))
+            gainLoss.text = "$" + String(format:"%.2f", abs(stock.change * Double(stock.numShares)))
+            
+            if stock.change > 0 {
+                change.textColor = UIColor(red: 0.04, green: 0.8, blue: 0.04, alpha: 1.0)
+                gainLoss.textColor = UIColor(red: 0.04, green: 0.8, blue: 0.04, alpha: 1.0)
+            } else if stock.change < 0 {
+                change.textColor = UIColor.redColor()
+                gainLoss.textColor = UIColor.redColor()
+            }
+            
+            
         } else {
             cell = tableView.dequeueReusableCellWithIdentifier("Summary") as! UITableViewCell
             
             var gainLoss = 0.0
             var currentValue = 0.0
             var dayStartValue = 0.0
-            for stock in dataModel.stocks {
+            for stock in dbAccess.stocks {
                 currentValue += Double(stock.numShares) * stock.lastTradePriceOnly
                 dayStartValue += Double(stock.numShares) * (stock.lastTradePriceOnly - stock.change)
                 gainLoss += Double(stock.numShares) * stock.change
             }
             
-            let summary = cell.viewWithTag(1004) as! UILabel
-            summary.text = "Today's change: $" + String(format:"%.2f", gainLoss) + " (" +
+            let todaysChange = cell.viewWithTag(1009) as! UILabel
+            todaysChange.text = "$" + String(format:"%.2f", gainLoss) + " (" +
                 String(format:"%.2f", ((currentValue / dayStartValue) - 1) * 100) + "%" + ")"
-            summary.textColor = UIColor(red: 0.04, green: 0.8, blue: 0.04, alpha: 1.0)
+            if gainLoss > 0 {
+                todaysChange.textColor = UIColor(red: 0.04, green: 0.8, blue: 0.04, alpha: 1.0)
+            } else if gainLoss < 0 {
+                todaysChange.textColor = UIColor.redColor()
+            }
 
-            let totalValue = cell.viewWithTag(1005) as! UILabel
-            totalValue.text = "Total value: $" + String(format: "%.2f", currentValue)
+
+            let totalValue = cell.viewWithTag(1010) as! UILabel
+            totalValue.text = "$" + String(format: "%.2f", currentValue)
             
-            let lastUpdated = cell.viewWithTag(1006) as! UILabel
+            let lastUpdated = cell.viewWithTag(1011) as! UILabel
             let date = NSDate()
             let formatter = NSDateFormatter()
             formatter.dateStyle = .ShortStyle
             formatter.timeStyle = .ShortStyle
-            lastUpdated.text = "Last updated: " + formatter.stringFromDate(date)
+            lastUpdated.text = formatter.stringFromDate(date)
         }
         
         return cell
@@ -236,7 +257,7 @@ class StockListViewController: UITableViewController, StockDetailViewControllerD
     }
     
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        dataModel.stocks.removeAtIndex(indexPath.row - 1)
+        dbAccess.stocks.removeAtIndex(indexPath.row - 1)
 
         let indexPaths = [indexPath]
         
@@ -251,7 +272,7 @@ class StockListViewController: UITableViewController, StockDetailViewControllerD
 
             let controller = navigationController.topViewController as! StockDetailViewController
             
-            controller.dataModel = dataModel
+            controller.dbAccess = dbAccess
             
             controller.delegate = self
         } else if segue.identifier == "EditStock" {
@@ -262,7 +283,7 @@ class StockListViewController: UITableViewController, StockDetailViewControllerD
             controller.delegate = self
             
             if let indexPath = tableView.indexPathForCell(sender as! UITableViewCell) {
-                controller.stockToEdit = dataModel.stocks[indexPath.row - 1]
+                controller.stockToEdit = dbAccess.stocks[indexPath.row - 1]
             }
         }
     }

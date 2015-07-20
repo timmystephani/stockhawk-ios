@@ -16,7 +16,9 @@
 		22EFD13F1B31418D00622A52 /* Stock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EFD13E1B31418D00622A52 /* Stock.swift */; };
 		22EFD1411B3147F400622A52 /* StockDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EFD1401B3147F400622A52 /* StockDetailViewController.swift */; };
 		22F700D91B5BA76000777E87 /* Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F700D81B5BA76000777E87 /* Functions.swift */; };
-		22F700DB1B5BC34A00777E87 /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F700DA1B5BC34A00777E87 /* DataModel.swift */; };
+		22F700DB1B5BC34A00777E87 /* DBAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F700DA1B5BC34A00777E87 /* DBAccess.swift */; };
+		22F700E11B5CCBD400777E87 /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F700E01B5CCBD400777E87 /* UIColorExtension.swift */; };
+		22F700E31B5CDBBE00777E87 /* CustomNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F700E21B5CDBBE00777E87 /* CustomNavigationController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,7 +45,9 @@
 		22EFD13E1B31418D00622A52 /* Stock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stock.swift; sourceTree = "<group>"; };
 		22EFD1401B3147F400622A52 /* StockDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StockDetailViewController.swift; sourceTree = "<group>"; };
 		22F700D81B5BA76000777E87 /* Functions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Functions.swift; sourceTree = "<group>"; };
-		22F700DA1B5BC34A00777E87 /* DataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
+		22F700DA1B5BC34A00777E87 /* DBAccess.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DBAccess.swift; sourceTree = "<group>"; };
+		22F700E01B5CCBD400777E87 /* UIColorExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
+		22F700E21B5CDBBE00777E87 /* CustomNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomNavigationController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,16 +89,14 @@
 		22EFD11B1B313C7900622A52 /* StockSum */ = {
 			isa = PBXGroup;
 			children = (
+				22F700E61B5CE2C800777E87 /* Utils */,
+				22F700E51B5CE2BC00777E87 /* Models */,
+				22F700E41B5CE2A700777E87 /* ViewControllers */,
 				22EFD11E1B313C7900622A52 /* AppDelegate.swift */,
-				22EFD1201B313C7900622A52 /* StockListViewController.swift */,
 				22EFD1221B313C7900622A52 /* Main.storyboard */,
 				22EFD1251B313C7900622A52 /* Images.xcassets */,
 				22EFD1271B313C7900622A52 /* LaunchScreen.xib */,
 				22EFD11C1B313C7900622A52 /* Supporting Files */,
-				22EFD13E1B31418D00622A52 /* Stock.swift */,
-				22EFD1401B3147F400622A52 /* StockDetailViewController.swift */,
-				22F700D81B5BA76000777E87 /* Functions.swift */,
-				22F700DA1B5BC34A00777E87 /* DataModel.swift */,
 			);
 			path = StockSum;
 			sourceTree = "<group>";
@@ -122,6 +124,34 @@
 				22EFD1331B313C7900622A52 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		22F700E41B5CE2A700777E87 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				22EFD1201B313C7900622A52 /* StockListViewController.swift */,
+				22EFD1401B3147F400622A52 /* StockDetailViewController.swift */,
+			);
+			name = ViewControllers;
+			sourceTree = "<group>";
+		};
+		22F700E51B5CE2BC00777E87 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				22EFD13E1B31418D00622A52 /* Stock.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		22F700E61B5CE2C800777E87 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				22F700DA1B5BC34A00777E87 /* DBAccess.swift */,
+				22F700D81B5BA76000777E87 /* Functions.swift */,
+				22F700E01B5CCBD400777E87 /* UIColorExtension.swift */,
+				22F700E21B5CDBBE00777E87 /* CustomNavigationController.swift */,
+			);
+			name = Utils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -225,11 +255,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				22EFD1411B3147F400622A52 /* StockDetailViewController.swift in Sources */,
+				22F700E11B5CCBD400777E87 /* UIColorExtension.swift in Sources */,
 				22EFD1211B313C7900622A52 /* StockListViewController.swift in Sources */,
 				22EFD11F1B313C7900622A52 /* AppDelegate.swift in Sources */,
+				22F700E31B5CDBBE00777E87 /* CustomNavigationController.swift in Sources */,
 				22F700D91B5BA76000777E87 /* Functions.swift in Sources */,
 				22EFD13F1B31418D00622A52 /* Stock.swift in Sources */,
-				22F700DB1B5BC34A00777E87 /* DataModel.swift in Sources */,
+				22F700DB1B5BC34A00777E87 /* DBAccess.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -12,13 +12,22 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    let dataModel = DataModel()
+    let dbAccess = DBAccess()
 
+    func customizeAppearance() {
+        //UINavigationBar.appearance().barTintColor = UIColor(hex: 0x512DA8)
+        UINavigationBar.appearance().barTintColor = UIColor.blackColor()
+        
+        UINavigationBar.appearance().titleTextAttributes = [
+            NSForegroundColorAttributeName: UIColor.whiteColor() ]
+    }
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        customizeAppearance()
+            
         let navigationController = window!.rootViewController as! UINavigationController
         let controller = navigationController.viewControllers[0] as! StockListViewController
-        controller.dataModel = dataModel
+        controller.dbAccess = dbAccess
         return true
     }
 
@@ -47,7 +56,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func saveData() {
-        dataModel.saveStocks()
+        dbAccess.saveStocks()
     }
 
 
