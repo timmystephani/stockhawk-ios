@@ -270,13 +270,22 @@ class StockListViewController: UITableViewController, StockDetailViewControllerD
     }
     
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        dbAccess.stocks.removeAtIndex(indexPath.row - 1)
+            // This is needed to override the default functionality and let the row be edited
+    }
+    
+    override func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [AnyObject]? {
+        var deleteButton = UITableViewRowAction(style: .Default, title: "Delete", handler: { (action, indexPath) in
+            self.dbAccess.stocks.removeAtIndex(indexPath.row - 1)
 
-        let indexPaths = [indexPath]
-        
-        tableView.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)
-        
-        tableView.reloadData()
+            let indexPaths = [indexPath]
+            
+            tableView.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)
+            
+            tableView.reloadData()
+        })
+        deleteButton.backgroundColor = UIColor(hex: Globals.LIGHT_PURPLE)
+
+        return [deleteButton]
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
