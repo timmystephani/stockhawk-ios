@@ -50,8 +50,35 @@ class Functions {
         task.resume()
     }
     
+    static func determineTextColorBasedOnPrice(price: Double) -> UIColor {
+        if price > 0 {
+            return Globals.UI_COLOR_GREEN
+        } else if price < 0 {
+            return Globals.UI_COLOR_RED
+        }
+        
+        return UIColor.whiteColor()
+    }
+    
+    static func formatNumberToCurrency(number: Double) -> String {
+        var formatter = NSNumberFormatter()
+        
+        formatter.numberStyle = .CurrencyStyle
+        
+        return formatter.stringFromNumber(number)!
+    }
+    
     static func afterDelay(seconds: Double, closure: () -> ()) {
         let when = dispatch_time(DISPATCH_TIME_NOW, Int64(seconds * Double(NSEC_PER_SEC)))
         dispatch_after(when, dispatch_get_main_queue(), closure)
+    }
+    
+    static func formatDateTimeToString(date: NSDate) -> String {
+        let formatter = NSDateFormatter()
+        
+        formatter.dateStyle = .ShortStyle
+        formatter.timeStyle = .ShortStyle
+        
+        return formatter.stringFromDate(date)
     }
 }

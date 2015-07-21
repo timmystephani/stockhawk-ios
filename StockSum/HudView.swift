@@ -34,7 +34,7 @@ class HudView: UIView {
             height: boxHeight)
             
         let roundedRect = UIBezierPath(roundedRect: boxRect, cornerRadius: 10)
-        UIColor(hex: Globals.LIGHT_PURPLE).setFill()
+        Globals.UI_COLOR_LIGHT_PURPLE.setFill()
         roundedRect.fill()
             
         if let image = UIImage(named: "Checkmark") {

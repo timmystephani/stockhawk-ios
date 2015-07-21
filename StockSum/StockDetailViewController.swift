@@ -45,7 +45,6 @@ class StockDetailViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-        
         let header:UITableViewHeaderFooterView = view as! UITableViewHeaderFooterView
         
         header.textLabel.font = UIFont(name: Globals.CUSTOM_FONT, size: 18)

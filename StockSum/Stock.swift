@@ -37,4 +37,24 @@ class Stock: NSObject, NSCoding {
         aCoder.encodeDouble(lastTradePriceOnly, forKey: "lastTradePriceOnly")
         aCoder.encodeDouble(change, forKey: "change")
     }
+    
+    func bindFromYahooDict(record: NSDictionary) {
+        if let name = record["Name"] as? String {
+            self.name = name
+        }
+        
+        if let lastTradePriceOnly = record["LastTradePriceOnly"] as? NSString {
+            self.lastTradePriceOnly = lastTradePriceOnly.doubleValue
+        }
+        
+        if var change = record["Change"] as? String {
+            if change.rangeOfString("+") != nil {
+                change = change.stringByReplacingOccurrencesOfString("+", withString: "")
+                self.change = (change as NSString).doubleValue
+            } else {
+                change = change.stringByReplacingOccurrencesOfString("-", withString: "")
+                self.change = -(change as NSString).doubleValue
+            }
+        }
+    }
 }

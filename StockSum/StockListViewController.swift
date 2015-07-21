@@ -43,15 +43,6 @@ class StockListViewController: UITableViewController, StockDetailViewControllerD
     }
     
     /*
-    Sort stocks alphabetically ASC
-    */
-    func sortStocks(stocks: [Stock]) {
-        dbAccess.stocks.sort { (s1, s2) -> Bool in
-            return s1.symbol < s2.symbol
-        }
-    }
-    
-    /*
     Helper function that returns stock symbols in string array -
     format accepted by queryYahoo function
     */
@@ -65,7 +56,9 @@ class StockListViewController: UITableViewController, StockDetailViewControllerD
     }
     
     func refresh() {
-        sortStocks(dbAccess.stocks)
+        dbAccess.stocks.sort { (s1, s2) -> Bool in
+            return s1.symbol < s2.symbol
+        }
         
         var symbols = convertStockArrayToStringArray(dbAccess.stocks)
         
@@ -78,42 +71,19 @@ class StockListViewController: UITableViewController, StockDetailViewControllerD
                                 
                                 let symbol = quote["symbol"] as! String
                                 let stock = self.getStockFromSymbol(symbol)
-                                    
-                                stock.name = quote["Name"] as! String
-                                stock.lastTradePriceOnly = (quote["LastTradePriceOnly"] as! NSString).doubleValue
-                                    
-                                var change = quote["Change"] as! String
-                                if change.rangeOfString("+") != nil {
-                                    change = change.stringByReplacingOccurrencesOfString("+", withString: "")
-                                    stock.change = (change as NSString).doubleValue
-                                } else {
-                                    change = change.stringByReplacingOccurrencesOfString("-", withString: "")
-                                    stock.change = -(change as NSString).doubleValue
-                                }
                                 
+                                stock.bindFromYahooDict(quote)
                             }
                         } else {
                             if let quote = results["quote"] as? NSArray {
-                                
                                 for singleQuote in quote {
                                     let symbol = singleQuote["symbol"] as! String
                                     let stock = self.getStockFromSymbol(symbol)
                                     
-                                    stock.name = singleQuote["Name"] as! String
-                                    stock.lastTradePriceOnly = (singleQuote["LastTradePriceOnly"] as! NSString).doubleValue
-                                    
-                                    var change = singleQuote["Change"] as! String
-                                    if change.rangeOfString("+") != nil {
-                                        change = change.stringByReplacingOccurrencesOfString("+", withString: "")
-                                        stock.change = (change as NSString).doubleValue
-                                    } else {
-                                        change = change.stringByReplacingOccurrencesOfString("-", withString: "")
-                                        stock.change = -(change as NSString).doubleValue
-                                    }
+                                    stock.bindFromYahooDict(singleQuote as! NSDictionary)
                                 }
                             }
                         }
-                        
                     }
                 }
                 
@@ -131,13 +101,12 @@ class StockListViewController: UITableViewController, StockDetailViewControllerD
                 alertController.addAction(okAction)
                 self.presentViewController(alertController, animated: true, completion: nil)
             }
-            
         }
     }
     
     /*
     Looks through our existing stocks trying to find 
-    one with same symbol - useful when yahoo api returns
+    one with same symbol - useful when Yahoo API returns
     array of records not neccessarily sorted
     */
     func getStockFromSymbol(symbol: String) -> Stock {
@@ -176,6 +145,57 @@ class StockListViewController: UITableViewController, StockDetailViewControllerD
         dismissViewControllerAnimated(true, completion: nil)
     }
     
+    func bindStockToStockCell(stock: Stock, cell: UITableViewCell) {
+        let symbol = cell.viewWithTag(1000) as! UILabel
+        symbol.text = stock.symbol
+        
+        let name = cell.viewWithTag(1002) as! UILabel
+        name.text = stock.name
+        
+        let numShares = cell.viewWithTag(1008) as! UILabel
+        numShares.text = String(stock.numShares) + " shares"
+        
+        let price = cell.viewWithTag(1001) as! UILabel
+        price.text = Functions.formatNumberToCurrency(stock.lastTradePriceOnly)
+        
+        let change = cell.viewWithTag(1012) as! UILabel
+        change.text = Functions.formatNumberToCurrency(abs(stock.change)) + " "
+            + String(format:"%.2f", abs(((stock.lastTradePriceOnly / (stock.lastTradePriceOnly - stock.change)) - 1) * 100)) + "%"
+        
+        let gainLoss = cell.viewWithTag(1003) as! UILabel
+        gainLoss.text = Functions.formatNumberToCurrency(abs(stock.change) * Double(stock.numShares))
+        
+        change.textColor = Functions.determineTextColorBasedOnPrice(stock.change)
+        gainLoss.textColor = Functions.determineTextColorBasedOnPrice(stock.change)
+    }
+    
+    func bindStocksToSummaryCell(stocks: [Stock], cell: UITableViewCell) {
+        var gainLoss = 0.0
+        var currentValue = 0.0
+        var dayStartValue = 0.0
+        for stock in dbAccess.stocks {
+            currentValue += Double(stock.numShares) * stock.lastTradePriceOnly
+            dayStartValue += Double(stock.numShares) * (stock.lastTradePriceOnly - stock.change)
+            gainLoss += Double(stock.numShares) * stock.change
+        }
+        
+        let todaysChange = cell.viewWithTag(1009) as! UILabel
+        var percentChange = 0.0
+        if dayStartValue > 0 { // avoid divide by zero (nan)
+            percentChange = ((currentValue / dayStartValue) - 1) * 100
+        }
+        todaysChange.text = Functions.formatNumberToCurrency(abs(gainLoss)) +
+            " " + String(format:"%.2f", abs(percentChange)) + "%"
+        
+        todaysChange.textColor = Functions.determineTextColorBasedOnPrice(gainLoss)
+        
+        let totalValue = cell.viewWithTag(1010) as! UILabel
+        totalValue.text = Functions.formatNumberToCurrency(currentValue)
+        
+        let lastUpdated = cell.viewWithTag(1011) as! UILabel
+        lastUpdated.text = Functions.formatDateTimeToString(NSDate())
+    }
+    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell: UITableViewCell
 
@@ -184,77 +204,24 @@ class StockListViewController: UITableViewController, StockDetailViewControllerD
             
             let stock = dbAccess.stocks[indexPath.row - 1]
             
-            let symbol = cell.viewWithTag(1000) as! UILabel
-            symbol.text = stock.symbol
-            
-            let name = cell.viewWithTag(1002) as! UILabel
-            name.text = stock.name
-            
-            let numShares = cell.viewWithTag(1008) as! UILabel
-            numShares.text = String(stock.numShares) + " shares"
-            
-            let price = cell.viewWithTag(1001) as! UILabel
-            price.text = "$" + String(format:"%.2f", stock.lastTradePriceOnly)
-                
-            let change = cell.viewWithTag(1012) as! UILabel
-            change.text = "$" + String(format:"%.2f", abs(stock.change)) + " "
-                + String(format:"%.2f", abs(((stock.lastTradePriceOnly / (stock.lastTradePriceOnly - stock.change)) - 1) * 100)) + "%"
-            
-            let gainLoss = cell.viewWithTag(1003) as! UILabel
-            gainLoss.text = "$" + String(format:"%.2f", abs(stock.change * Double(stock.numShares)))
-            
-            if stock.change > 0 {
-                change.textColor = UIColor(red: 0.04, green: 0.8, blue: 0.04, alpha: 1.0)
-                gainLoss.textColor = UIColor(red: 0.04, green: 0.8, blue: 0.04, alpha: 1.0)
-            } else if stock.change < 0 {
-                change.textColor = UIColor.redColor()
-                gainLoss.textColor = UIColor.redColor()
-            }
-            
-            
+            bindStockToStockCell(stock, cell: cell)
         } else {
             cell = tableView.dequeueReusableCellWithIdentifier("Summary") as! UITableViewCell
             
             cell.selectionStyle = .None
             
-            var gainLoss = 0.0
-            var currentValue = 0.0
-            var dayStartValue = 0.0
-            for stock in dbAccess.stocks {
-                currentValue += Double(stock.numShares) * stock.lastTradePriceOnly
-                dayStartValue += Double(stock.numShares) * (stock.lastTradePriceOnly - stock.change)
-                gainLoss += Double(stock.numShares) * stock.change
-            }
-            
-            let todaysChange = cell.viewWithTag(1009) as! UILabel
-            var percentChange = 0.0
-            if dayStartValue > 0 { // avoid divide by zero (nan)
-                percentChange = ((currentValue / dayStartValue) - 1) * 100
-            }
-            todaysChange.text = "$" + String(format:"%.2f", abs(gainLoss)) + " " +
-                String(format:"%.2f", abs(percentChange)) + "%"
-            if gainLoss > 0 {
-                todaysChange.textColor = UIColor(red: 0.04, green: 0.8, blue: 0.04, alpha: 1.0)
-            } else if gainLoss < 0 {
-                todaysChange.textColor = UIColor.redColor()
-            }
-
-
-            let totalValue = cell.viewWithTag(1010) as! UILabel
-            totalValue.text = "$" + String(format: "%.2f", currentValue)
-            
-            let lastUpdated = cell.viewWithTag(1011) as! UILabel
-            let date = NSDate()
-            let formatter = NSDateFormatter()
-            formatter.dateStyle = .ShortStyle
-            formatter.timeStyle = .ShortStyle
-            lastUpdated.text = formatter.stringFromDate(date)
+            bindStocksToSummaryCell(dbAccess.stocks, cell: cell)
         }
         
         return cell
     }
     
+    
+    
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        /*
+        The first row (summary row) should not be able to be deleted or swiped left
+        */
         if indexPath.row == 0 {
             return false
         }
@@ -262,6 +229,9 @@ class StockListViewController: UITableViewController, StockDetailViewControllerD
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        /*
+        The first row (summary row) has a slightly bigger row size than the rest of the rows
+        */
         if indexPath.row == 0 {
             return 80
         } else {
@@ -270,40 +240,39 @@ class StockListViewController: UITableViewController, StockDetailViewControllerD
     }
     
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-            // This is needed to override the default functionality and let the row be edited
+        // This is needed to override the default functionality and let the row be edited
     }
     
+    /*
+    Create custom delete button in purple
+    */
     override func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [AnyObject]? {
         var deleteButton = UITableViewRowAction(style: .Default, title: "Delete", handler: { (action, indexPath) in
             self.dbAccess.stocks.removeAtIndex(indexPath.row - 1)
-
-            let indexPaths = [indexPath]
             
-            tableView.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)
+            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
             
             tableView.reloadData()
         })
-        deleteButton.backgroundColor = UIColor(hex: Globals.LIGHT_PURPLE)
+        
+        deleteButton.backgroundColor = Globals.UI_COLOR_LIGHT_PURPLE
 
         return [deleteButton]
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        /*
+        Logic applies to both segues currently in app
+        */
+        let navigationController = segue.destinationViewController as! UINavigationController
+        
+        let controller = navigationController.topViewController as! StockDetailViewController
+        
+        controller.delegate = self
+        
         if segue.identifier == "AddStock" {
-            let navigationController = segue.destinationViewController as! UINavigationController
-
-            let controller = navigationController.topViewController as! StockDetailViewController
-            
             controller.dbAccess = dbAccess
-            
-            controller.delegate = self
         } else if segue.identifier == "EditStock" {
-            let navigationController = segue.destinationViewController as! UINavigationController
-            
-            let controller = navigationController.topViewController as! StockDetailViewController
-            
-            controller.delegate = self
-            
             if let indexPath = tableView.indexPathForCell(sender as! UITableViewCell) {
                 controller.stockToEdit = dbAccess.stocks[indexPath.row - 1]
             }
