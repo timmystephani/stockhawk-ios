@@ -215,6 +215,8 @@ class StockListViewController: UITableViewController, StockDetailViewControllerD
         } else {
             cell = tableView.dequeueReusableCellWithIdentifier("Summary") as! UITableViewCell
             
+            cell.selectionStyle = .None
+            
             var gainLoss = 0.0
             var currentValue = 0.0
             var dayStartValue = 0.0
@@ -250,6 +252,13 @@ class StockListViewController: UITableViewController, StockDetailViewControllerD
         }
         
         return cell
+    }
+    
+    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        if indexPath.row == 0 {
+            return false
+        }
+        return true
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
