@@ -15,7 +15,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let dbAccess = DBAccess()
 
     func customizeAppearance() {
-        //UINavigationBar.appearance().barTintColor = UIColor(hex: 0x512DA8)
         UINavigationBar.appearance().barTintColor = UIColor.blackColor()
         
         UINavigationBar.appearance().titleTextAttributes = [

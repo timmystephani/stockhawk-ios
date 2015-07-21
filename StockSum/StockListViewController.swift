@@ -32,6 +32,8 @@ class StockListViewController: UITableViewController, StockDetailViewControllerD
         Query yahoo and try to update stock prices
         */
         refresh()
+        
+        Functions.addBorderToNavBar(self.navigationController!.navigationBar)
     }
     
     

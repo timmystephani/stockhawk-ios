@@ -42,6 +42,8 @@ class StockDetailViewController: UITableViewController {
             let barButton = UIBarButtonItem.appearance()
             barButton.setTitleTextAttributes([NSFontAttributeName: font], forState: UIControlState.Normal)
         }
+        
+        Functions.addBorderToNavBar(self.navigationController!.navigationBar)
     }
     
     override func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {

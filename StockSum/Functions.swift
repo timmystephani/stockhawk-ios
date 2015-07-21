@@ -50,6 +50,14 @@ class Functions {
         task.resume()
     }
     
+    static func addBorderToNavBar(navBar: UINavigationBar) {
+        var navBorder = UIView(frame: CGRectMake(0, navBar.frame.size.height - 1, navBar.frame.size.width, 1))
+        
+        navBorder.backgroundColor = Globals.UI_COLOR_LIGHT_PURPLE
+        navBorder.opaque = true
+        navBar.addSubview(navBorder)
+    }
+    
     static func determineTextColorBasedOnPrice(price: Double) -> UIColor {
         if price > 0 {
             return Globals.UI_COLOR_GREEN
