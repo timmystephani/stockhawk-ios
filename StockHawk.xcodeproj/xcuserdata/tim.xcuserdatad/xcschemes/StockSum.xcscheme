@@ -16,8 +16,8 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "22EFD1181B313C7900622A52"
                BuildableName = "Stock Market Tracker.app"
-               BlueprintName = "Stock Market Tracker"
-               ReferencedContainer = "container:Stock Market Tracker.xcodeproj">
+               BlueprintName = "StockHawk"
+               ReferencedContainer = "container:StockHawk.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -30,8 +30,8 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "22EFD12D1B313C7900622A52"
                BuildableName = "Stock Market TrackerTests.xctest"
-               BlueprintName = "Stock Market TrackerTests"
-               ReferencedContainer = "container:Stock Market Tracker.xcodeproj">
+               BlueprintName = "StockHawkTests"
+               ReferencedContainer = "container:StockHawk.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -48,8 +48,8 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "22EFD12D1B313C7900622A52"
                BuildableName = "Stock Market TrackerTests.xctest"
-               BlueprintName = "Stock Market TrackerTests"
-               ReferencedContainer = "container:Stock Market Tracker.xcodeproj">
+               BlueprintName = "StockHawkTests"
+               ReferencedContainer = "container:StockHawk.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -58,8 +58,8 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "22EFD1181B313C7900622A52"
             BuildableName = "Stock Market Tracker.app"
-            BlueprintName = "Stock Market Tracker"
-            ReferencedContainer = "container:Stock Market Tracker.xcodeproj">
+            BlueprintName = "StockHawk"
+            ReferencedContainer = "container:StockHawk.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -78,8 +78,8 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "22EFD1181B313C7900622A52"
             BuildableName = "Stock Market Tracker.app"
-            BlueprintName = "Stock Market Tracker"
-            ReferencedContainer = "container:Stock Market Tracker.xcodeproj">
+            BlueprintName = "StockHawk"
+            ReferencedContainer = "container:StockHawk.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -97,8 +97,8 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "22EFD1181B313C7900622A52"
             BuildableName = "Stock Market Tracker.app"
-            BlueprintName = "Stock Market Tracker"
-            ReferencedContainer = "container:Stock Market Tracker.xcodeproj">
+            BlueprintName = "StockHawk"
+            ReferencedContainer = "container:StockHawk.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
