@@ -70,7 +70,7 @@ class StockDetailViewController: UITableViewController {
     
     @IBAction func save() {
         if symbol.text == "" {
-            showAlert("Error", message: "Please enter a symbol or click Cancel.")
+            Functions.showAlert("Error", message: "Please enter a symbol or click Cancel.", caller: self)
             return
         } else if numShares.text == "" {
             numShares.text = "0"
@@ -86,7 +86,7 @@ class StockDetailViewController: UITableViewController {
             
         } else {
             if stockAlreadyExists(symbol.text) {
-                self.showAlert("Error", message: "You already have that stock in your list.")
+                Functions.showAlert("Error", message: "You already have that stock in your list.", caller: self)
                 return
             }
             
@@ -102,7 +102,7 @@ class StockDetailViewController: UITableViewController {
 
                     dispatch_async(dispatch_get_main_queue(), { () -> () in
                         if invalidSymbol {
-                            self.showAlert("Error", message: "That symbol is not recognized by the Yahoo Finance API.")
+                            Functions.showAlert("Error", message: "That symbol is not recognized by the Yahoo Finance API.", caller: self)
                         } else {
                             let stock = Stock()
                             stock.symbol = self.symbol.text
@@ -114,7 +114,7 @@ class StockDetailViewController: UITableViewController {
                         }
                     })
                 } else {
-                    self.showAlert("Error", message: "There was a problem refreshing the data. Please check your internet connection and try again.")
+                    Functions.showAlert("Error", message: "There was a problem refreshing the data. Please check your internet connection and try again.", caller: self)
                 }
             }
         }
@@ -153,15 +153,6 @@ class StockDetailViewController: UITableViewController {
         }
         
         return false
-    }
-    
-    func showAlert(title: String, message: String) {
-        var alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-        var okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default) {
-            UIAlertAction in
-        }
-        alertController.addAction(okAction)
-        self.presentViewController(alertController, animated: true, completion: nil)
     }
     
     @IBAction func cancel() {

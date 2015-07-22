@@ -89,4 +89,16 @@ class Functions {
         
         return formatter.stringFromDate(date)
     }
+    
+    static func showAlert(title: String, message: String, caller: UITableViewController) {
+        var alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+        
+        var okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default) {
+            UIAlertAction in
+        }
+        
+        alertController.addAction(okAction)
+        
+        caller.presentViewController(alertController, animated: true, completion: nil)
+    }
 }

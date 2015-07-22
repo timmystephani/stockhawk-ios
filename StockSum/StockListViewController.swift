@@ -95,13 +95,8 @@ class StockListViewController: UITableViewController, StockDetailViewControllerD
                 })
             } else {
                 self.refreshControl!.endRefreshing()
-
-                var alertController = UIAlertController(title: "Error", message: "There was a problem refreshing the data. Please check your internet connection and try again.", preferredStyle: .Alert)
-                var okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default) {
-                    UIAlertAction in
-                }
-                alertController.addAction(okAction)
-                self.presentViewController(alertController, animated: true, completion: nil)
+                
+                Functions.showAlert("Error", message: "There was a problem refreshing the data. Please check your internet connection and try again.", caller: self)
             }
         }
     }
@@ -122,7 +117,7 @@ class StockListViewController: UITableViewController, StockDetailViewControllerD
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if dbAccess.stocks.count == 0 {
-            return 1 // no records found cells
+            return 1 // no records found cell
         }
         
         return dbAccess.stocks.count + 1 // summary cell
@@ -210,13 +205,12 @@ class StockListViewController: UITableViewController, StockDetailViewControllerD
             cell.selectionStyle = .None
 
             let noRecords = cell.viewWithTag(1015) as! UILabel
-            noRecords.text = "You haven't added any stocks yet.\nTap the \"+\" to add a stock."
+            noRecords.text = Globals.NO_RECORDS_TEXT
         } else if indexPath.row == 0 {
             cell = tableView.dequeueReusableCellWithIdentifier("Summary") as! UITableViewCell
             cell.selectionStyle = .None
             
             bindStocksToSummaryCell(dbAccess.stocks, cell: cell)
-            
         } else {
             cell = tableView.dequeueReusableCellWithIdentifier("Stock") as! UITableViewCell
             
@@ -227,8 +221,6 @@ class StockListViewController: UITableViewController, StockDetailViewControllerD
         
         return cell
     }
-    
-    
     
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         /*
