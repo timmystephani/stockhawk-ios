@@ -19,13 +19,14 @@
             <string>DINNextLTW04-Regular</string>
             <string>DINNextLTW04-Regular</string>
             <string>DINNextLTW04-Regular</string>
+            <string>DINNextLTW04-Regular</string>
         </mutableArray>
     </customFonts>
     <scenes>
         <!--Your Stocks-->
         <scene sceneID="PJY-SA-sSk">
             <objects>
-                <tableViewController id="BfK-Qf-nSt" customClass="StockListViewController" customModule="StockSum" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="BfK-Qf-nSt" customClass="StockListViewController" customModule="Stock_Market_Tracker" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="75" sectionHeaderHeight="22" sectionFooterHeight="22" id="vPP-Yl-8d4">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -144,6 +145,24 @@
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                             </tableViewCell>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="NoRecords" id="hTr-je-R0c">
+                                <rect key="frame" x="0.0" y="241" width="320" height="75"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="hTr-je-R0c" id="RuO-WS-u4p">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="74"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" tag="1015" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No records" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="qFh-i2-ORw">
+                                            <rect key="frame" x="21" y="0.0" width="270" height="66"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" name="DINNextLTW04-Regular" family="DIN Next LT W04" pointSize="16"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableViewCell>
                         </prototypes>
                         <sections/>
                         <connections>
@@ -179,7 +198,7 @@
         <!--Stock Detail-->
         <scene sceneID="qFM-C9-Yki">
             <objects>
-                <tableViewController id="W0O-QA-ldT" customClass="StockDetailViewController" customModule="StockSum" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="W0O-QA-ldT" customClass="StockDetailViewController" customModule="Stock_Market_Tracker" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="NyQ-Dx-USD">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -258,7 +277,7 @@
         <!--Custom Navigation Controller-->
         <scene sceneID="p6B-en-ne5">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="vf0-Jj-Aur" customClass="CustomNavigationController" customModule="StockSum" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="vf0-Jj-Aur" customClass="CustomNavigationController" customModule="Stock_Market_Tracker" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="pIp-pI-em5">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -276,7 +295,7 @@
         <!--Custom Navigation Controller-->
         <scene sceneID="90w-3q-u2v">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="sOz-JL-RVM" customClass="CustomNavigationController" customModule="StockSum" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="sOz-JL-RVM" customClass="CustomNavigationController" customModule="Stock_Market_Tracker" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="MKo-09-W35">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>

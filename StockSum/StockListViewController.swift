@@ -121,6 +121,10 @@ class StockListViewController: UITableViewController, StockDetailViewControllerD
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if dbAccess.stocks.count == 0 {
+            return 1 // no records found cells
+        }
+        
         return dbAccess.stocks.count + 1 // summary cell
     }
     
@@ -201,18 +205,24 @@ class StockListViewController: UITableViewController, StockDetailViewControllerD
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell: UITableViewCell
 
-        if indexPath.row > 0 {
+        if dbAccess.stocks.count == 0 && indexPath.row == 0 {
+            cell = tableView.dequeueReusableCellWithIdentifier("NoRecords") as! UITableViewCell
+            cell.selectionStyle = .None
+
+            let noRecords = cell.viewWithTag(1015) as! UILabel
+            noRecords.text = "You haven't added any stocks yet.\nTap the \"+\" to add a stock."
+        } else if indexPath.row == 0 {
+            cell = tableView.dequeueReusableCellWithIdentifier("Summary") as! UITableViewCell
+            cell.selectionStyle = .None
+            
+            bindStocksToSummaryCell(dbAccess.stocks, cell: cell)
+            
+        } else {
             cell = tableView.dequeueReusableCellWithIdentifier("Stock") as! UITableViewCell
             
             let stock = dbAccess.stocks[indexPath.row - 1]
             
             bindStockToStockCell(stock, cell: cell)
-        } else {
-            cell = tableView.dequeueReusableCellWithIdentifier("Summary") as! UITableViewCell
-            
-            cell.selectionStyle = .None
-            
-            bindStocksToSummaryCell(dbAccess.stocks, cell: cell)
         }
         
         return cell
@@ -234,7 +244,7 @@ class StockListViewController: UITableViewController, StockDetailViewControllerD
         /*
         The first row (summary row) has a slightly bigger row size than the rest of the rows
         */
-        if indexPath.row == 0 {
+        if indexPath.row == 0 && dbAccess.stocks.count > 0 {
             return 80
         } else {
             return super.tableView(tableView, heightForRowAtIndexPath: indexPath)
