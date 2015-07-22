@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "22EFD1181B313C7900622A52"
-               BuildableName = "StockSum.app"
-               BlueprintName = "StockSum"
-               ReferencedContainer = "container:StockSum.xcodeproj">
+               BuildableName = "Stock Market Tracker.app"
+               BlueprintName = "Stock Market Tracker"
+               ReferencedContainer = "container:Stock Market Tracker.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -29,9 +29,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "22EFD12D1B313C7900622A52"
-               BuildableName = "StockSumTests.xctest"
-               BlueprintName = "StockSumTests"
-               ReferencedContainer = "container:StockSum.xcodeproj">
+               BuildableName = "Stock Market TrackerTests.xctest"
+               BlueprintName = "Stock Market TrackerTests"
+               ReferencedContainer = "container:Stock Market Tracker.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -47,9 +47,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "22EFD12D1B313C7900622A52"
-               BuildableName = "StockSumTests.xctest"
-               BlueprintName = "StockSumTests"
-               ReferencedContainer = "container:StockSum.xcodeproj">
+               BuildableName = "Stock Market TrackerTests.xctest"
+               BlueprintName = "Stock Market TrackerTests"
+               ReferencedContainer = "container:Stock Market Tracker.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -57,9 +57,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "22EFD1181B313C7900622A52"
-            BuildableName = "StockSum.app"
-            BlueprintName = "StockSum"
-            ReferencedContainer = "container:StockSum.xcodeproj">
+            BuildableName = "Stock Market Tracker.app"
+            BlueprintName = "Stock Market Tracker"
+            ReferencedContainer = "container:Stock Market Tracker.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -77,9 +77,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "22EFD1181B313C7900622A52"
-            BuildableName = "StockSum.app"
-            BlueprintName = "StockSum"
-            ReferencedContainer = "container:StockSum.xcodeproj">
+            BuildableName = "Stock Market Tracker.app"
+            BlueprintName = "Stock Market Tracker"
+            ReferencedContainer = "container:Stock Market Tracker.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -96,9 +96,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "22EFD1181B313C7900622A52"
-            BuildableName = "StockSum.app"
-            BlueprintName = "StockSum"
-            ReferencedContainer = "container:StockSum.xcodeproj">
+            BuildableName = "Stock Market Tracker.app"
+            BlueprintName = "Stock Market Tracker"
+            ReferencedContainer = "container:Stock Market Tracker.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
