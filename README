@@ -1,29 +1,31 @@
 TODO:
 make cool icon
-change name to StockHawk
 change color of symbol textbox when editing to show disabled
 add comments to code
-Add info section - props to mike, email address for contact, etc
 charts - show stock detail page and make separate edit menu, maybe slide left edit button
 allow search by symbol or company name and let them select
 
 
 DONE:
-add last updated at: datetime - DONE
-save to database - DONE
-when adding/updating check if yql has it listed - DONE
+add last updated at: datetime
+save to database
+when adding/updating check if yql has it listed
 add hud when refreshing - see pull to refresh
-pull to refresh - DONE
-add sorting - DONE
-check if duplicate when adding new stock - DONE
+pull to refresh
+add sorting
+check if duplicate when adding new stock
 interval picker for num shares - Nahhhh
-change color - DONE
-add cool font- DONE
-add hud after saving stock - DONE
-fix layouts so it autosizes - DONE
+change color
+add cool font
+add hud after saving stock 
+fix layouts so it autosizes 
 Make github repo private or push to bitbucket 
-
+change name to StockHawk
 
 NOTES:
 color palette: https://www.materialpalette.com/deep-purple/blue
 Keywords: real-time simple stock market tracker
+Screenshot ideas: refreshing, deleteing, adding, all stocks
+sample chart - http://chart.finance.yahoo.com/z?s=DDD&t=1d&q=l&l=on&z=s
+chart options - https://code.google.com/p/yahoo-finance-managed/wiki/miscapiImageDownload
+Add info section - props to mike, email address for contact, etc

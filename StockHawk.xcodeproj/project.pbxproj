@@ -23,27 +23,16 @@
 		22F700ED1B5CF4FC00777E87 /* HudView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F700EC1B5CF4FC00777E87 /* HudView.swift */; };
 		22F700F11B5CF5E200777E87 /* Checkmark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 22F700EF1B5CF5E200777E87 /* Checkmark@2x.png */; };
 		22F700F21B5CF5E200777E87 /* Checkmark@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 22F700F01B5CF5E200777E87 /* Checkmark@3x.png */; };
+		22F7014C1B61C7ED00777E87 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F7014B1B61C7ED00777E87 /* InfoViewController.swift */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		22EFD12F1B313C7900622A52 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 22EFD1111B313C7900622A52 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 22EFD1181B313C7900622A52;
-			remoteInfo = StockSum;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
-		22EFD1191B313C7900622A52 /* StockHawk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StockHawk.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		22EFD11D1B313C7900622A52 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		22EFD11E1B313C7900622A52 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		22EFD1201B313C7900622A52 /* StockListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockListViewController.swift; sourceTree = "<group>"; };
 		22EFD1231B313C7900622A52 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		22EFD1251B313C7900622A52 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		22EFD1281B313C7900622A52 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		22EFD12E1B313C7900622A52 /* StockHawkTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StockHawkTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		22EFD13E1B31418D00622A52 /* Stock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stock.swift; sourceTree = "<group>"; };
 		22EFD1401B3147F400622A52 /* StockDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StockDetailViewController.swift; sourceTree = "<group>"; };
 		22F700D81B5BA76000777E87 /* Functions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Functions.swift; sourceTree = "<group>"; };
@@ -55,17 +44,12 @@
 		22F700EC1B5CF4FC00777E87 /* HudView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HudView.swift; sourceTree = "<group>"; };
 		22F700EF1B5CF5E200777E87 /* Checkmark@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Checkmark@2x.png"; sourceTree = "<group>"; };
 		22F700F01B5CF5E200777E87 /* Checkmark@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Checkmark@3x.png"; sourceTree = "<group>"; };
+		22F7014A1B61C4BD00777E87 /* StockHawk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StockHawk.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		22F7014B1B61C7ED00777E87 /* InfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		22EFD1161B313C7900622A52 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		22EFD12B1B313C7900622A52 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -79,17 +63,8 @@
 			isa = PBXGroup;
 			children = (
 				22EFD11B1B313C7900622A52 /* StockHawk */,
-				22EFD11A1B313C7900622A52 /* Products */,
+				22F7014A1B61C4BD00777E87 /* StockHawk.app */,
 			);
-			sourceTree = "<group>";
-		};
-		22EFD11A1B313C7900622A52 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				22EFD1191B313C7900622A52 /* StockHawk.app */,
-				22EFD12E1B313C7900622A52 /* StockHawkTests.xctest */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		22EFD11B1B313C7900622A52 /* StockHawk */ = {
@@ -121,6 +96,7 @@
 			children = (
 				22EFD1201B313C7900622A52 /* StockListViewController.swift */,
 				22EFD1401B3147F400622A52 /* StockDetailViewController.swift */,
+				22F7014B1B61C7ED00777E87 /* InfoViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -189,26 +165,8 @@
 			);
 			name = StockHawk;
 			productName = StockSum;
-			productReference = 22EFD1191B313C7900622A52 /* StockHawk.app */;
+			productReference = 22F7014A1B61C4BD00777E87 /* StockHawk.app */;
 			productType = "com.apple.product-type.application";
-		};
-		22EFD12D1B313C7900622A52 /* StockHawkTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 22EFD13B1B313C7900622A52 /* Build configuration list for PBXNativeTarget "StockHawkTests" */;
-			buildPhases = (
-				22EFD12A1B313C7900622A52 /* Sources */,
-				22EFD12B1B313C7900622A52 /* Frameworks */,
-				22EFD12C1B313C7900622A52 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				22EFD1301B313C7900622A52 /* PBXTargetDependency */,
-			);
-			name = StockHawkTests;
-			productName = StockSumTests;
-			productReference = 22EFD12E1B313C7900622A52 /* StockHawkTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
@@ -222,10 +180,6 @@
 					22EFD1181B313C7900622A52 = {
 						CreatedOnToolsVersion = 6.3.2;
 					};
-					22EFD12D1B313C7900622A52 = {
-						CreatedOnToolsVersion = 6.3.2;
-						TestTargetID = 22EFD1181B313C7900622A52;
-					};
 				};
 			};
 			buildConfigurationList = 22EFD1141B313C7900622A52 /* Build configuration list for PBXProject "StockHawk" */;
@@ -237,12 +191,11 @@
 				Base,
 			);
 			mainGroup = 22EFD1101B313C7900622A52;
-			productRefGroup = 22EFD11A1B313C7900622A52 /* Products */;
+			productRefGroup = 22EFD1101B313C7900622A52;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				22EFD1181B313C7900622A52 /* StockHawk */,
-				22EFD12D1B313C7900622A52 /* StockHawkTests */,
 			);
 		};
 /* End PBXProject section */
@@ -261,13 +214,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		22EFD12C1B313C7900622A52 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -276,6 +222,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				22EFD1411B3147F400622A52 /* StockDetailViewController.swift in Sources */,
+				22F7014C1B61C7ED00777E87 /* InfoViewController.swift in Sources */,
 				22F700E11B5CCBD400777E87 /* UIColorExtension.swift in Sources */,
 				22EFD1211B313C7900622A52 /* StockListViewController.swift in Sources */,
 				22EFD11F1B313C7900622A52 /* AppDelegate.swift in Sources */,
@@ -288,22 +235,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		22EFD12A1B313C7900622A52 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		22EFD1301B313C7900622A52 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 22EFD1181B313C7900622A52 /* StockHawk */;
-			targetProxy = 22EFD12F1B313C7900622A52 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		22EFD1221B313C7900622A52 /* Main.storyboard */ = {
@@ -431,40 +363,6 @@
 			};
 			name = Release;
 		};
-		22EFD13C1B313C7900622A52 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = StockSumTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = StockHawkTests;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/StockSum.app/StockSum";
-			};
-			name = Debug;
-		};
-		22EFD13D1B313C7900622A52 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = StockSumTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = StockHawkTests;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/StockSum.app/StockSum";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -482,15 +380,6 @@
 			buildConfigurations = (
 				22EFD1391B313C7900622A52 /* Debug */,
 				22EFD13A1B313C7900622A52 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		22EFD13B1B313C7900622A52 /* Build configuration list for PBXNativeTarget "StockHawkTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				22EFD13C1B313C7900622A52 /* Debug */,
-				22EFD13D1B313C7900622A52 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

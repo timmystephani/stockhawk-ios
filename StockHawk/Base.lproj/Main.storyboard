@@ -20,13 +20,14 @@
             <string>DINNextLTW04-Regular</string>
             <string>DINNextLTW04-Regular</string>
             <string>DINNextLTW04-Regular</string>
+            <string>DINNextLTW04-Regular</string>
         </mutableArray>
     </customFonts>
     <scenes>
         <!--Your Stocks-->
         <scene sceneID="PJY-SA-sSk">
             <objects>
-                <tableViewController id="BfK-Qf-nSt" customClass="StockListViewController" customModule="Stock_Market_Tracker" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="BfK-Qf-nSt" customClass="StockListViewController" customModule="StockHawk" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="75" sectionHeaderHeight="22" sectionFooterHeight="22" id="vPP-Yl-8d4">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -86,7 +87,7 @@
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
-                                    <segue destination="sOz-JL-RVM" kind="modal" identifier="EditStock" id="fgY-gv-iMQ"/>
+                                    <segue destination="sOz-JL-RVM" kind="modal" identifier="EditStock" modalTransitionStyle="flipHorizontal" id="fgY-gv-iMQ"/>
                                 </connections>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Summary" rowHeight="80" id="nMb-iu-Hvn">
@@ -171,9 +172,18 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Your Stocks" id="je8-k5-psS">
+                        <barButtonItem key="leftBarButtonItem" id="wFM-7H-fvy">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoDark" lineBreakMode="middleTruncation" id="PPD-3f-2sZ">
+                                <rect key="frame" x="21" y="11" width="22" height="22"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <action selector="showInfo" destination="BfK-Qf-nSt" eventType="touchUpInside" id="Fca-n0-EXf"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="Zu2-hv-k6R">
                             <connections>
-                                <segue destination="sOz-JL-RVM" kind="modal" identifier="AddStock" id="Ya7-oA-hGB"/>
+                                <segue destination="sOz-JL-RVM" kind="modal" identifier="AddStock" modalTransitionStyle="flipHorizontal" id="Ya7-oA-hGB"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -190,15 +200,51 @@
                             </fragment>
                         </attributedString>
                     </refreshControl>
+                    <connections>
+                        <segue destination="Nz2-Mb-Ow8" kind="modal" identifier="InfoSegue" id="4d5-tQ-Ko7"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="K2Z-0x-hjd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1012" y="293"/>
+            <point key="canvasLocation" x="992" y="293"/>
+        </scene>
+        <!--Info-->
+        <scene sceneID="D52-7x-816">
+            <objects>
+                <viewController title="Info" id="adQ-UU-mMG" customClass="InfoViewController" customModule="StockHawk" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="fcV-tl-0hF">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="About Info" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ohi-V8-ThE">
+                                <rect key="frame" x="16" y="70" width="288" height="151"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <fontDescription key="fontDescription" name="DINNextLTW04-Regular" family="DIN Next LT W04" pointSize="16"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="StockHawk" id="p5q-59-Fbk">
+                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="6HB-Pj-faH">
+                            <connections>
+                                <action selector="done" destination="adQ-UU-mMG" id="jTz-3u-fSZ"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="infoLabel" destination="ohi-V8-ThE" id="zWa-Yq-0Nn"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dhX-kW-rS2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1534" y="1002"/>
         </scene>
         <!--Stock Detail-->
         <scene sceneID="qFM-C9-Yki">
             <objects>
-                <tableViewController id="W0O-QA-ldT" customClass="StockDetailViewController" customModule="Stock_Market_Tracker" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="W0O-QA-ldT" customClass="StockDetailViewController" customModule="StockHawk" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="NyQ-Dx-USD">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -207,7 +253,7 @@
                             <tableViewSection headerTitle="Symbol" id="uhy-WJ-kFU">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="lei-2T-eUG">
-                                        <rect key="frame" x="0.0" y="50" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="114" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" tag="1007" contentMode="center" tableViewCell="lei-2T-eUG" id="ajg-6F-zdb">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -230,7 +276,7 @@
                             <tableViewSection headerTitle="Number of Shares" id="kKJ-Qa-Os1">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="x0h-7o-Vaa">
-                                        <rect key="frame" x="0.0" y="137" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="201" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="x0h-7o-Vaa" id="Oap-A0-b4i">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -277,7 +323,7 @@
         <!--Custom Navigation Controller-->
         <scene sceneID="p6B-en-ne5">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="vf0-Jj-Aur" customClass="CustomNavigationController" customModule="Stock_Market_Tracker" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="vf0-Jj-Aur" customClass="CustomNavigationController" customModule="StockHawk" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="pIp-pI-em5">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -295,7 +341,7 @@
         <!--Custom Navigation Controller-->
         <scene sceneID="90w-3q-u2v">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="sOz-JL-RVM" customClass="CustomNavigationController" customModule="Stock_Market_Tracker" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="sOz-JL-RVM" customClass="CustomNavigationController" customModule="StockHawk" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="MKo-09-W35">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -309,6 +355,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="72A-Ft-aHo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1366.9333333333334" y="293.46666666666664"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="2sH-Ca-Wiu">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Nz2-Mb-Ow8" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="pWc-sJ-ad7">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="adQ-UU-mMG" kind="relationship" relationship="rootViewController" id="hLB-Dk-gJ7"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="FDs-uC-81u" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1002" y="1002"/>
         </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

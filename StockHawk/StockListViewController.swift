@@ -36,6 +36,9 @@ class StockListViewController: UITableViewController, StockDetailViewControllerD
         Functions.addBorderToNavBar(self.navigationController!.navigationBar)
     }
     
+    @IBAction func showInfo() {
+        performSegueWithIdentifier("InfoSegue", sender: self)
+    }
     
     /*
     Handler for pull to refresh funcationlity - delegate to refresh()
@@ -265,18 +268,21 @@ class StockListViewController: UITableViewController, StockDetailViewControllerD
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        /*
-        Logic applies to both segues currently in app
-        */
-        let navigationController = segue.destinationViewController as! UINavigationController
-        
-        let controller = navigationController.topViewController as! StockDetailViewController
-        
-        controller.delegate = self
         
         if segue.identifier == "AddStock" {
+            let navigationController = segue.destinationViewController as! UINavigationController
+            
+            let controller = navigationController.topViewController as! StockDetailViewController
+            
+            controller.delegate = self
+            
             controller.dbAccess = dbAccess
         } else if segue.identifier == "EditStock" {
+            let navigationController = segue.destinationViewController as! UINavigationController
+            
+            let controller = navigationController.topViewController as! StockDetailViewController
+            
+            controller.delegate = self
             if let indexPath = tableView.indexPathForCell(sender as! UITableViewCell) {
                 controller.stockToEdit = dbAccess.stocks[indexPath.row - 1]
             }
